@@ -40,7 +40,7 @@ else
     exit 0
 fi
 
-# Script to save, stage, commit, and push changes, logging all output and errors
+# Script to stage all changes, commit with relevant messages, and push all commits, logging all output and errors
 LOGFILE="error.log"
 
 # Clear previous log
@@ -52,19 +52,23 @@ LOGFILE="error.log"
   git status
 } &>> "$LOGFILE"
 
-# Stage all changes
+# Stage all changes (including untracked)
 {
   echo "==== git add ===="
-  git add .
+  git add -A .
 } &>> "$LOGFILE"
 
-# Commit changes
+# Commit all staged changes with a single relevant message
 {
   echo "==== git commit ===="
-  git commit -m "Auto commit from error-check.sh"
+  if git diff --cached --quiet; then
+    echo "No changes to commit."
+  else
+    git commit -m "Stage, commit, and push all changes via error-check.sh"
+  fi
 } &>> "$LOGFILE"
 
-# Push changes
+# Always push
 {
   echo "==== git push ===="
   git push git@github.com:eoextrainer/ryze.git main
