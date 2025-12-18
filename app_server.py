@@ -560,11 +560,11 @@ def admin_dashboard():
     if 'user_type' not in session or session['user_type'] != 'admin':
         return redirect(url_for('login'))
     
-    # Example: fetch all users by category for tabular display
     clubs = Club.query.all()
     players = Player.query.all()
     agents = Agent.query.all()
-    return render_template('admin_dashboard.html', clubs=clubs, players=players, agents=agents, admin_name=session.get('user_name', 'Admin'))
+    club_videos = get_club_video_map()
+    return render_template('admin_dashboard.html', clubs=clubs, players=players, agents=agents, club_videos=club_videos, admin_name=session.get('user_name', 'Admin'))
 
 
 @app.route('/agent/dashboard')
