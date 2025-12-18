@@ -1,3 +1,4 @@
+
 """
 <<<<<<< HEAD
 ryze Basketball Platform - Flask Backend
@@ -283,11 +284,25 @@ def index():
 def login():
     """Login page for clubs and players"""
     if request.method == 'POST':
-        data = request.get_json()
-        user_type = data.get('user_type')  # 'club' or 'player'
+        # Accept both JSON and form data
+        if request.is_json:
+            data = request.get_json()
+        else:
+            data = request.form
+        user_type = data.get('user_type')
         email = data.get('email')
         password = data.get('password')
-        
+
+        # Admin login
+        if user_type == 'admin':
+            if email == 'admin@ryze.fr' and password == 'password123':
+                session['user_id'] = 0
+                session['user_type'] = 'admin'
+                session['user_name'] = 'Admin'
+                return jsonify({'success': True, 'redirect': '/admin/dashboard'})
+            return jsonify({'success': False, 'message': 'Invalid credentials'})
+
+        # Club login
         if user_type == 'club':
             club = Club.query.filter_by(email=email).first()
             if club and club.check_password(password):
@@ -296,8 +311,9 @@ def login():
                 session['user_name'] = club.name
                 return jsonify({'success': True, 'redirect': '/club/dashboard'})
             return jsonify({'success': False, 'message': 'Invalid credentials'})
-        
-        elif user_type == 'player':
+
+        # Player login
+        if user_type == 'player':
             player = Player.query.filter_by(email=email).first()
             if player and player.check_password(password):
                 session['user_id'] = player.id
@@ -305,7 +321,19 @@ def login():
                 session['user_name'] = f"{player.first_name} {player.last_name}"
                 return jsonify({'success': True, 'redirect': '/player/dashboard'})
             return jsonify({'success': False, 'message': 'Invalid credentials'})
-    
+
+        # Agent login
+        if user_type == 'agent':
+            agent = Agent.query.filter_by(email=email).first()
+            if agent and agent.check_password(password):
+                session['user_id'] = agent.id
+                session['user_type'] = 'agent'
+                session['user_name'] = f"{agent.first_name} {agent.last_name}"
+                return jsonify({'success': True, 'redirect': '/agent/dashboard'})
+            return jsonify({'success': False, 'message': 'Invalid credentials'})
+
+        return jsonify({'success': False, 'message': 'Invalid user type'})
+
     return render_template('login.html')
 
 
@@ -468,77 +496,62 @@ def init_db():
         
         print("Populating database with sample data...")
         
-        # Create 15 clubs (5 per tier)
-        clubs_data = [
-            # Pro A (3 clubs)
-            ('Paris Basketball', 'Pro A', 'contact@parisbball.fr', 'Paris'),
-            ('Monaco Basketball', 'Pro A', 'contact@monaco.fr', 'Monaco'),
-            ('Asvel Lyon', 'Pro A', 'contact@asvel.fr', 'Lyon'),
-            
-            # Pro B (3 clubs)
-            ('Strasbourg IG', 'Pro B', 'contact@strasbourg.fr', 'Strasbourg'),
-            ('Dijon Basketball', 'Pro B', 'contact@dijon.fr', 'Dijon'),
-            ('Nanterre 92', 'Pro B', 'contact@nanterre.fr', 'Nanterre'),
-            
-            # N1 (3 clubs)
-            ('Boulogne-Levallois', 'N1', 'contact@boulogne.fr', 'Boulogne'),
-            ('Saint-Quentin', 'N1', 'contact@stquentin.fr', 'Saint-Quentin'),
-            ('Roanne', 'N1', 'contact@roanne.fr', 'Roanne'),
-            
-            # N2 (3 clubs)
-            ('Toulouse', 'N2', 'contact@toulouse.fr', 'Toulouse'),
-            ('Marseille', 'N2', 'contact@marseille.fr', 'Marseille'),
-            ('Bordeaux', 'N2', 'contact@bordeaux.fr', 'Bordeaux'),
-            
-            # N3 (3 clubs)
-            ('Lille', 'N3', 'contact@lille.fr', 'Lille'),
-            ('Nice', 'N3', 'contact@nice.fr', 'Nice'),
-            ('Nantes', 'N3', 'contact@nantes.fr', 'Nantes'),
-        ]
-        
+        # Guarantee at least 2 clubs with known emails and password123
         clubs = []
-        for name, tier, email, city in clubs_data:
+        club_entries = [
+            ('Paris Basketball', 'Pro A', 'contact@parisbball.fr', 'Paris'),
+            ('Strasbourg IG', 'Pro B', 'contact@strasbourg.fr', 'Strasbourg'),
+        ]
+        for name, tier, email, city in club_entries:
             club = Club(name=name, tier=tier, email=email, city=city)
             club.set_password('password123')
             clubs.append(club)
             db.session.add(club)
-        
         db.session.commit()
         
-        # Create 30 players with random subscription tiers
-        first_names = ['Luc', 'Marc', 'Jean', 'Pierre', 'Nicolas', 'Philippe', 'Laurent', 'Olivier', 'David', 'Thierry',
-                      'Eric', 'Christian', 'Vincent', 'Francois', 'Michel', 'Anthony', 'Jamal', 'DeShawn', 'Marcus', 'Andre',
-                      'Tyrone', 'Isiah', 'Magic', 'Larry', 'Charles', 'Scottie', 'Michael', 'Kobe', 'LeBron', 'Stephen']
-        
-        last_names = ['James', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez',
-                     'Hernandez', 'Lopez', 'Sanchez', 'Clark', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young',
-                     'Durand', 'Moreau', 'Simon', 'Laurent', 'Lefevre', 'Dupont', 'Bernard', 'Petit', 'Gérard', 'Fournier']
-        
-        positions = ['Guard', 'Forward', 'Center']
-        nationalities = ['France', 'USA', 'Spain', 'Germany', 'Italy', 'Portugal', 'Greece', 'Serbia']
-        
+        # Guarantee at least 3 players with known emails and password123
         players = []
-        tier_distribution = random.choices(['tier1', 'tier2', 'tier3'], weights=[10, 10, 10], k=30)
-        
-        for i in range(30):
+        player_entries = [
+            ('Luc', 'James', 'player1@ryze.fr'),
+            ('Marc', 'Johnson', 'player2@ryze.fr'),
+            ('Jean', 'Williams', 'player3@ryze.fr'),
+        ]
+        for first, last, email in player_entries:
             player = Player(
-                first_name=first_names[i],
-                last_name=last_names[i],
-                email=f"player{i+1}@ryze.fr",
-                date_of_birth=datetime(1990 + i % 20, random.randint(1, 12), random.randint(1, 28)).date(),
-                height=180 + random.randint(-20, 20),
-                weight=80 + random.randint(-20, 30),
-                nationality=random.choice(nationalities),
-                position=random.choice(positions),
-                photo_path=f"res/player-{(i % 8) + 1}.png",
-                subscription_tier=tier_distribution[i],
+                first_name=first,
+                last_name=last,
+                email=email,
+                date_of_birth=datetime(2000, 1, 1).date(),
+                height=190,
+                weight=85,
+                nationality='France',
+                position='Guard',
+                photo_path='',
+                subscription_tier='tier1',
                 subscription_start=datetime.utcnow(),
                 subscription_end=datetime.utcnow() + timedelta(days=365)
             )
             player.set_password('password123')
             players.append(player)
             db.session.add(player)
-        
+        db.session.commit()
+        # Guarantee at least 2 agents with known emails and password123
+        agent_entries = [
+            ('Alice', 'Agent', 'agent1@france.fr'),
+            ('Bob', 'Agent', 'agent2@france.fr'),
+        ]
+        for first, last, email in agent_entries:
+            agent = Agent(
+                first_name=first,
+                last_name=last,
+                email=email,
+                agency='Top Agency',
+                city='Paris',
+                phone='1234567890',
+                created_at=datetime.utcnow()
+            )
+            agent.set_password('password123')
+            db.session.add(agent)
         db.session.commit()
         
         # Create player stats for all players

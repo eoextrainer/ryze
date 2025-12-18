@@ -162,15 +162,17 @@
             <h2>🏀 ryze Login</h2>
             
             <div class="user-type-toggle">
-                <button class="user-type-btn active" onclick="switchUserType('club')">Club Login</button>
-                <button class="user-type-btn" onclick="switchUserType('player')">Player Login</button>
+                <button class="user-type-btn active" onclick="switchUserType('admin')">Admin</button>
+                <button class="user-type-btn" onclick="switchUserType('club')">Club</button>
+                <button class="user-type-btn" onclick="switchUserType('agent')">Agent</button>
+                <button class="user-type-btn" onclick="switchUserType('player')">Player</button>
             </div>
 
             <div id="error-msg" class="error-msg" style="display: none;"></div>
             <div id="success-msg" class="success-msg" style="display: none;"></div>
 
             <form id="login-form" onsubmit="handleLogin(event)">
-                <input type="hidden" id="user-type" value="club">
+                <input type="hidden" id="user-type" value="admin">
                 
                 <div class="form-group">
                     <label for="email">Email Address</label>
@@ -190,19 +192,14 @@
                 <p><strong>Admin:</strong> admin@ryze.fr / password123</p>
                 <p><strong>Clubs:</strong><br>
                 contact@parisbball.fr / password123<br>
-                contact@strasbourg.fr / password123<br>
-                contact@boulogne.fr / password123</p>
+                contact@strasbourg.fr / password123</p>
                 <p><strong>Agents:</strong><br>
                 agent1@france.fr / password123<br>
-                agent2@france.fr / password123<br>
-                agent3@france.fr / password123<br>
-                agent4@france.fr / password123</p>
+                agent2@france.fr / password123</p>
                 <p><strong>Players:</strong><br>
                 player1@ryze.fr / password123<br>
                 player2@ryze.fr / password123<br>
-                player3@ryze.fr / password123<br>
-                player4@ryze.fr / password123<br>
-                player5@ryze.fr / password123</p>
+                player3@ryze.fr / password123</p>
                 <p style="font-size:0.95em; color:#aaa;">All users use <b>password123</b> unless changed by admin. For more credentials, see documentation or contact support.</p>
             </div>
 
