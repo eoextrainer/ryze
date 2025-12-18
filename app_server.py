@@ -1,10 +1,7 @@
 
+
 """
-<<<<<<< HEAD
 ryze Basketball Platform - Flask Backend
-=======
-dunes Basketball Platform - Flask Backend
->>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
 Supports clubs and players with subscription tiers and private dashboards
 """
 

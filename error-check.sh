@@ -39,3 +39,40 @@ else
     echo "[NO ERRORS]" >> "$KNOWLEDGE"
     exit 0
 fi
+
+# Script to save, stage, commit, and push changes, logging all output and errors
+LOGFILE="error.log"
+
+# Clear previous log
+> "$LOGFILE"
+
+# Save all changes
+{
+  echo "==== git status ===="
+  git status
+} &>> "$LOGFILE"
+
+# Stage all changes
+{
+  echo "==== git add ===="
+  git add .
+} &>> "$LOGFILE"
+
+# Commit changes
+{
+  echo "==== git commit ===="
+  git commit -m "Auto commit from error-check.sh"
+} &>> "$LOGFILE"
+
+# Push changes
+{
+  echo "==== git push ===="
+  git push git@github.com:eoextrainer/ryze.git main
+} &>> "$LOGFILE"
+
+# Check for errors
+if grep -i "error" "$LOGFILE"; then
+  echo "Errors found in $LOGFILE. Please review and fix."
+else
+  echo "All steps completed successfully."
+fi
