@@ -1,0 +1,21 @@
+# Ignore Python virtual environments
+.venv/
+__pycache__/
+
+# Ignore database and instance files
+instance/*.db
+instance/*.sql
+
+# Ignore archives
+ryze.zip
+ryze.tar.gz
+
+# Ignore system files
+.DS_Store
+*.swp
+
+# Ignore logs
+*.log
+
+# Ignore other environment files
+.env
