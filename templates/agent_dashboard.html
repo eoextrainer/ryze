@@ -2,11 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Agent Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard - ryze Basketball</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        body { background: #0a1428; color: #D0D4D9; }
+        .dashboard-navbar { background: linear-gradient(90deg, #0a1428 0%, #001f3f 100%); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a52; }
+        .navbar-title { font-size: 1.5rem; color: #CC9900; font-weight: 700; }
+        .navbar-right { display: flex; gap: 2rem; align-items: center; }
+        .navbar-right a { color: #D0D4D9; text-decoration: none; transition: color 0.3s ease; }
+        .navbar-right a:hover { color: #CC9900; }
+        .logout-btn { background: #CC9900; color: #0a1428; padding: 0.6rem 1.5rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
+        .logout-btn:hover { background: #E6B800; }
+        .dashboard-container { padding: 3rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .agent-info-section { background: rgba(26, 35, 50, 0.8); padding: 2rem; border-radius: 8px; margin-bottom: 3rem; border: 1px solid #1a3a52; }
+        .agent-info-section h1 { color: #CC9900; margin-bottom: 0.5rem; }
+        .tiles-section { margin-bottom: 3rem; }
+        .tiles-title { color: #CC9900; font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .tile-row { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem; }
+        .player-card { flex: 0 0 260px; background: rgba(26, 35, 50, 0.8); border: 1px solid #1a3a52; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 10px 30px rgba(204, 153, 0, 0.08); }
+        .player-card:hover { border-color: #CC9900; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(204, 153, 0, 0.2); }
+        .player-image { width: 100%; height: 180px; object-fit: cover; background: linear-gradient(135deg, #001f3f 0%, #0a1428 100%); }
+        .player-info { padding: 1.2rem; }
+        .player-info h3 { color: #CC9900; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .meta { color: #D0D4D9; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    </style>
 </head>
 <body>
-    <h2>Welcome, {{ agent.first_name }} {{ agent.last_name }}!</h2>
-    <p>This is the agent dashboard.</p>
-    <a href="/logout">Logout</a>
+    <nav class="dashboard-navbar">
+        <div class="navbar-title">🏀 Agent Dashboard</div>
+        <div class="navbar-right">
+            <a href="/" style="font-size: 0.9rem;">View Website</a>
+            <form method="post" action="/logout" style="margin: 0; display: inline;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <!-- Agent Info Panel -->
+        <div class="agent-info-section">
+            <h1>Welcome, {{ agent.first_name }} {{ agent.last_name }}!</h1>
+            <p>Agency: <span style="color:#CC9900;">{{ agent.agency }}</span></p>
+            <p>City: <span style="color:#CC9900;">{{ agent.city }}</span></p>
+            <p>Email: <span style="color:#CC9900;">{{ agent.email }}</span></p>
+        </div>
+        <!-- Example: Show all players (adapt as needed) -->
+        <div class="tiles-section">
+            <div class="tiles-title">Players</div>
+            <div class="tile-row">
+                {% for player in players %}
+                <div class="player-card">
+                    <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                    <div class="player-info">
+                        <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                        <div class="meta">{{ player.position }} | {{ player.nationality }}</div>
+                        <div class="meta">{{ player.email }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>

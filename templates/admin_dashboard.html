@@ -2,11 +2,176 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ryze Basketball</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        body { background: #0a1428; color: #D0D4D9; }
+        .dashboard-navbar { background: linear-gradient(90deg, #0a1428 0%, #001f3f 100%); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a52; }
+        .navbar-title { font-size: 1.5rem; color: #CC9900; font-weight: 700; }
+        .navbar-right { display: flex; gap: 2rem; align-items: center; }
+        .navbar-right a { color: #D0D4D9; text-decoration: none; transition: color 0.3s ease; }
+        .navbar-right a:hover { color: #CC9900; }
+        .logout-btn { background: #CC9900; color: #0a1428; padding: 0.6rem 1.5rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
+        .logout-btn:hover { background: #E6B800; }
+        .dashboard-container { padding: 3rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .admin-info-section { background: rgba(26, 35, 50, 0.8); padding: 2rem; border-radius: 8px; margin-bottom: 3rem; border: 1px solid #1a3a52; }
+        .admin-info-section h1 { color: #CC9900; margin-bottom: 0.5rem; }
+        .user-table-section { background: rgba(26, 35, 50, 0.8); padding: 2rem; border-radius: 8px; margin-bottom: 3rem; border: 1px solid #1a3a52; }
+        .user-table-title { color: #CC9900; font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .user-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+        .user-table th, .user-table td { padding: 0.8rem 1rem; border-bottom: 1px solid #1a3a52; }
+        .user-table th { color: #CC9900; text-align: left; font-weight: 600; background: rgba(204, 153, 0, 0.1); }
+        .user-table tr:hover { background: rgba(204, 153, 0, 0.05); }
+        .filter-btn { padding: 0.6rem 1.2rem; background: rgba(26, 35, 50, 0.8); border: 2px solid #1a3a52; color: #D0D4D9; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; margin-right: 0.5rem; }
+        .filter-btn.active, .filter-btn:hover { background: #CC9900; border-color: #CC9900; color: #0a1428; }
+        .tiles-section { margin-bottom: 3rem; }
+        .tiles-title { color: #CC9900; font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .tile-row { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem; }
+        .player-card, .club-tile, .agent-tile { flex: 0 0 260px; background: rgba(26, 35, 50, 0.8); border: 1px solid #1a3a52; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 10px 30px rgba(204, 153, 0, 0.08); }
+        .player-card:hover, .club-tile:hover, .agent-tile:hover { border-color: #CC9900; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(204, 153, 0, 0.2); }
+        .player-image, .club-logo, .agent-photo { width: 100%; height: 180px; object-fit: cover; background: linear-gradient(135deg, #001f3f 0%, #0a1428 100%); }
+        .player-info, .club-info, .agent-info { padding: 1.2rem; }
+        .player-info h3, .club-info h3, .agent-info h3 { color: #CC9900; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .meta { color: #D0D4D9; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    </style>
 </head>
 <body>
-    <h2>Welcome, {{ admin_name }}!</h2>
-    <p>This is the admin dashboard.</p>
-    <a href="/logout">Logout</a>
+    <nav class="dashboard-navbar">
+        <div class="navbar-title">🏀 Admin Dashboard</div>
+        <div class="navbar-right">
+            <a href="/" style="font-size: 0.9rem;">View Website</a>
+            <form method="post" action="/logout" style="margin: 0; display: inline;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <!-- Admin Info Panel -->
+        <div class="admin-info-section">
+            <h1>Welcome, {{ admin_name }}!</h1>
+            <p>👤 You are logged in as the platform administrator. Use the tools below to manage users, clubs, and agents.</p>
+        </div>
+
+        <!-- User Table with Filters -->
+        <div class="user-table-section">
+            <div class="user-table-title">All Users</div>
+            <div style="margin-bottom: 1rem;">
+                <button class="filter-btn active" onclick="filterTable('all')">All</button>
+                <button class="filter-btn" onclick="filterTable('players')">Players</button>
+                <button class="filter-btn" onclick="filterTable('clubs')">Clubs</button>
+                <button class="filter-btn" onclick="filterTable('agents')">Agents</button>
+            </div>
+            <table class="user-table" id="user-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>City/Agency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in players %}
+                    <tr data-type="players">
+                        <td>{{ player.first_name }} {{ player.last_name }}</td>
+                        <td>{{ player.email }}</td>
+                        <td>Player</td>
+                        <td>{{ player.nationality }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for club in clubs %}
+                    <tr data-type="clubs">
+                        <td>{{ club.name }}</td>
+                        <td>{{ club.email }}</td>
+                        <td>Club</td>
+                        <td>{{ club.city }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for agent in agents %}
+                    <tr data-type="agents">
+                        <td>{{ agent.first_name }} {{ agent.last_name }}</td>
+                        <td>{{ agent.email }}</td>
+                        <td>Agent</td>
+                        <td>{{ agent.agency }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tiles Section: Players -->
+        <div class="tiles-section">
+            <div class="tiles-title">Players</div>
+            <div class="tile-row">
+                {% for player in players %}
+                <div class="player-card">
+                    <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                    <div class="player-info">
+                        <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                        <div class="meta">{{ player.position }} | {{ player.nationality }}</div>
+                        <div class="meta">{{ player.email }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Tiles Section: Clubs -->
+        <div class="tiles-section">
+            <div class="tiles-title">Clubs</div>
+            <div class="tile-row">
+                {% for club in clubs %}
+                <div class="club-tile">
+                    <div class="club-tile-header" style="display: flex; align-items: center; gap: 0.75rem;">
+                        {% if club.logo_path %}
+                        <img src="{{ url_for('static', filename=club.logo_path) }}" alt="{{ club.name }} logo" class="club-logo" style="width:52px;height:52px;object-fit:contain;background:rgba(0,0,0,0.25);border-radius:10px;border:1px solid #1a3a52;padding:0.4rem;">
+                        {% endif %}
+                        <div>
+                            <h3>{{ club.name }}</h3>
+                            <div class="meta">{{ club.city }} • {{ club.tier }}</div>
+                        </div>
+                    </div>
+                    <div class="club-info">
+                        <div class="meta">{{ club.email }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Tiles Section: Agents -->
+        <div class="tiles-section">
+            <div class="tiles-title">Agents</div>
+            <div class="tile-row">
+                {% for agent in agents %}
+                <div class="agent-tile">
+                    <div class="agent-info">
+                        <h3>{{ agent.first_name }} {{ agent.last_name }}</h3>
+                        <div class="meta">{{ agent.agency }} | {{ agent.city }}</div>
+                        <div class="meta">{{ agent.email }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script>
+        function filterTable(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if(type === 'all') {
+                document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+            } else {
+                document.querySelector('.filter-btn[onclick*="' + type + '"]').classList.add('active');
+            }
+            document.querySelectorAll('#user-table tbody tr').forEach(row => {
+                if(type === 'all' || row.getAttribute('data-type') === type) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>

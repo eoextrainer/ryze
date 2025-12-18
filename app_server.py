@@ -574,7 +574,9 @@ def agent_dashboard():
     agent = Agent.query.get(agent_id) if agent_id else None
     if not agent:
         return redirect(url_for('login'))
-    return render_template('agent_dashboard.html', agent=agent)
+    # Show all players for now (can be filtered by agent in future)
+    players = Player.query.all()
+    return render_template('agent_dashboard.html', agent=agent, players=players)
 
 
 # ==================== Initialize Database ====================
