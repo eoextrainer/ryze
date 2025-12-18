@@ -1,5 +1,9 @@
 """
+<<<<<<< HEAD
 ryze Basketball Platform - Flask Backend
+=======
+dunes Basketball Platform - Flask Backend
+>>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
 Supports clubs and players with subscription tiers and private dashboards
 """
 
@@ -198,6 +202,26 @@ class News(db.Model):
     club_id = db.Column(db.Integer, db.ForeignKey('clubs.id'))
     player_id = db.Column(db.Integer, db.ForeignKey('players.id'))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+# ==================== Agent Model ====================
+class Agent(db.Model):
+    __tablename__ = 'agents'
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(120), nullable=False)
+    last_name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
+    agency = db.Column(db.String(120))
+    city = db.Column(db.String(120))
+    phone = db.Column(db.String(40))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
 # ==================== Club Highlight Videos ====================
@@ -615,7 +639,11 @@ if __name__ == '__main__':
     host = os.environ.get('HOST', '0.0.0.0')
     debug = os.environ.get('FLASK_DEBUG', '0') in ('1', 'true', 'True')
 
+<<<<<<< HEAD
     print("\n✅ ryze Basketball Platform Ready!")
+=======
+    print("\n✅ dunes Basketball Platform Ready!")
+>>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
     print(f"📍 Server: http://{host}:{port}")
     print("🔐 Demo Credentials:")
     print("   Club: contact@parisbball.fr / password123")

@@ -1,1 +1,5 @@
 python-3.12.3
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import os
+import sys
 from datetime import datetime
-from app_server import app, db, Club, Player, ClubPlayer, PlayerStat, Performance, PlayerResume
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from app_server import app, db, Club, Player, ClubPlayer, PlayerStat, Performance, PlayerResume, Agent
 from werkzeug.security import generate_password_hash
 
 def ensure_defaults():
@@ -34,6 +36,38 @@ def ensure_defaults():
                 logo_path='res/logo/ryze.png'
             )
             db.session.add(c)
+    db.session.commit()
+
+    # Create 15 French agents
+    agents_data = [
+        ("Jean", "Dupont", "agent1@france.fr", "Paris", "Elite Agency", "0600000001"),
+        ("Marie", "Durand", "agent2@france.fr", "Lyon", "Pro Agents", "0600000002"),
+        ("Pierre", "Lefevre", "agent3@france.fr", "Marseille", "Hexagone Sports", "0600000003"),
+        ("Luc", "Moreau", "agent4@france.fr", "Toulouse", "Elite Agency", "0600000004"),
+        ("Sophie", "Lambert", "agent5@france.fr", "Nice", "Pro Agents", "0600000005"),
+        ("Antoine", "Roux", "agent6@france.fr", "Nantes", "Hexagone Sports", "0600000006"),
+        ("Claire", "Fontaine", "agent7@france.fr", "Strasbourg", "Elite Agency", "0600000007"),
+        ("Julien", "Garnier", "agent8@france.fr", "Montpellier", "Pro Agents", "0600000008"),
+        ("Camille", "Faure", "agent9@france.fr", "Bordeaux", "Hexagone Sports", "0600000009"),
+        ("Hugo", "Blanc", "agent10@france.fr", "Lille", "Elite Agency", "0600000010"),
+        ("Emma", "Perrin", "agent11@france.fr", "Rennes", "Pro Agents", "0600000011"),
+        ("Louis", "Marchand", "agent12@france.fr", "Reims", "Hexagone Sports", "0600000012"),
+        ("Chloe", "Robin", "agent13@france.fr", "Le Havre", "Elite Agency", "0600000013"),
+        ("Lucas", "Guerin", "agent14@france.fr", "Saint-Etienne", "Pro Agents", "0600000014"),
+        ("Manon", "Benoit", "agent15@france.fr", "Grenoble", "Hexagone Sports", "0600000015"),
+    ]
+    for first_name, last_name, email, city, agency, phone in agents_data:
+        if not Agent.query.filter_by(email=email).first():
+            a = Agent(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                password_hash=generate_password_hash('AgentPass123!'),
+                city=city,
+                agency=agency,
+                phone=phone
+            )
+            db.session.add(a)
     db.session.commit()
 
     # Create 30 players with provided dataset

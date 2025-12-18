@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
+<<<<<<< HEAD
 ryze Basketball Platform - Complete User Credentials Report
+=======
+dunes Basketball Platform - Complete User Credentials Report
+>>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
 Lists all player and club login credentials for verification
 """
 
@@ -10,7 +14,11 @@ def generate_credentials_report():
     """Generate a comprehensive credentials report"""
     with app.app_context():
         print("\n" + "="*80)
+<<<<<<< HEAD
         print("ryze BASKETBALL PLATFORM - USER CREDENTIALS REPORT")
+=======
+        print("dunes BASKETBALL PLATFORM - USER CREDENTIALS REPORT")
+>>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
         print("="*80)
         
         # All Players

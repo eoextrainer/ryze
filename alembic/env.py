@@ -2,6 +2,16 @@ from __future__ import with_statement
 from logging.config import fileConfig
 import sys
 import os
+
+# File-based debug logging
+def log_debug(msg):
+    try:
+        with open('/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/alembic_env_debug.log', 'a') as f:
+            f.write(str(msg) + '\n')
+    except Exception as e:
+        pass
+
+log_debug('[alembic.env.py] --- env.py execution started ---')
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 from os import path
@@ -16,8 +26,10 @@ fileConfig(config.config_file_name)
 
 # Ensure project root is on sys.path so 'app_server' can be imported
 project_root = path.abspath(path.join(path.dirname(__file__), '..'))
+log_debug(f"[alembic.env.py] sys.path before: {sys.path}")
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
+log_debug(f"[alembic.env.py] sys.path after: {sys.path}")
 
 # Override sqlalchemy.url from env var DATABASE_URL
 db_url = os.environ.get('DATABASE_URL')
@@ -33,8 +45,14 @@ if db_url:
 # add your model's MetaData object here for 'autogenerate' support
 # from yourapp import yourmodel
 # target_metadata = yourmodel.Base.metadata
-from app_server import db  # noqa: E402
-target_metadata = db.metadata
+try:
+    from app_server import db  # noqa: E402
+    log_debug(f"[alembic.env.py] db: {db}")
+    log_debug(f"[alembic.env.py] db.metadata: {getattr(db, 'metadata', None)}")
+    target_metadata = db.metadata
+except Exception as e:
+    log_debug(f"[alembic.env.py] ERROR importing db from app_server: {e}")
+    target_metadata = None
 
 def run_migrations_offline():
     url = config.get_main_option("sqlalchemy.url")

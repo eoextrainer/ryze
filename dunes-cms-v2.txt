@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 This is the ryze Be Global project
+=======
+This is the dunes Be Global project
+>>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
