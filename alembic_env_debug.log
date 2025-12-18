@@ -8,3 +8,11 @@
 [alembic.env.py] sys.path after: ['/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/bin', '/usr/lib/python312.zip', '/usr/lib/python3.12', '/usr/lib/python3.12/lib-dynload', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/lib/python3.12/site-packages']
 [alembic.env.py] db: <SQLAlchemy>
 [alembic.env.py] db.metadata: MetaData()
+[alembic.env.py] --- env.py execution started ---
+[alembic.env.py] sys.path before: ['/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/bin', '/usr/lib/python312.zip', '/usr/lib/python3.12', '/usr/lib/python3.12/lib-dynload', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/lib/python3.12/site-packages']
+[alembic.env.py] sys.path after: ['/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/bin', '/usr/lib/python312.zip', '/usr/lib/python3.12', '/usr/lib/python3.12/lib-dynload', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/lib/python3.12/site-packages']
+[alembic.env.py] ERROR importing db from app_server: invalid decimal literal (app_server.py, line 646)
+[alembic.env.py] --- env.py execution started ---
+[alembic.env.py] sys.path before: ['/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/bin', '/usr/lib/python312.zip', '/usr/lib/python3.12', '/usr/lib/python3.12/lib-dynload', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/lib/python3.12/site-packages']
+[alembic.env.py] sys.path after: ['/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/bin', '/usr/lib/python312.zip', '/usr/lib/python3.12', '/usr/lib/python3.12/lib-dynload', '/media/eoex/DOJO/CONSULTING/PROJECTS/TEST/ryze/.venv/lib/python3.12/site-packages']
+[alembic.env.py] ERROR importing db from app_server: invalid decimal literal (app_server.py, line 646)

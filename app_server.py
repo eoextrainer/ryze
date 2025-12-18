@@ -639,11 +639,7 @@ if __name__ == '__main__':
     host = os.environ.get('HOST', '0.0.0.0')
     debug = os.environ.get('FLASK_DEBUG', '0') in ('1', 'true', 'True')
 
-<<<<<<< HEAD
     print("\n✅ ryze Basketball Platform Ready!")
-=======
-    print("\n✅ dunes Basketball Platform Ready!")
->>>>>>> 513add7 (Update: project documentation, structure, workflows, and archives)
     print(f"📍 Server: http://{host}:{port}")
     print("🔐 Demo Credentials:")
     print("   Club: contact@parisbball.fr / password123")
