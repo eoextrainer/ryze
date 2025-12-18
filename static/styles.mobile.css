@@ -1,0 +1,35 @@
+/* Mobile-only stylesheet: simplify layout, larger touch targets, stack sections */
+
+html, body { margin: 0; padding: 0; }
+
+.navbar, .dashboard-navbar, .player-navbar { padding: 0.75rem 1rem; }
+.nav-links-right .nav-link, .btn-login { padding: 0.5rem 0.75rem; }
+
+.hero-split.video-bg { height: 260px; }
+.video-bg__overlay .hero-video-content { padding: 0 1rem; }
+
+.section.shell, .hero-content-section, .dashboard-container, .club-access-section,
+.profile-section, .stats-section, .resume-section, .news-section, .welcome-section {
+  padding: 1rem !important; margin: 0 auto; max-width: 100%;
+}
+
+/* Carousels: single item per view with snap */
+.carousel-wrapper { gap: 0.75rem !important; }
+.carousel-item { flex: 0 0 100% !important; scroll-snap-align: center; }
+
+/* Buttons larger for touch */
+.filter-btn, .cta-btn, .club-cta { padding: 0.75rem 1rem; font-size: 1rem; }
+
+/* Grids stack */
+.club-tiles { grid-template-columns: 1fr !important; }
+.video-track .video-slide { display: block !important; }
+
+/* Player dashboard adjustments */
+.profile-section { grid-template-columns: 1fr !important; gap: 1rem !important; }
+.stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+/* Tables scroll */
+.performance-table { display: block; overflow-x: auto; }
+
+/* Footer compact */
+.footer-shell, .journey-grid, .journey-card-grid { padding: 1rem; }

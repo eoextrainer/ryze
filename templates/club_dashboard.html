@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Dashboard - Dunes Basketball</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        body {
+            background: #0a1428;
+            color: #D0D4D9;
+        }
+
+        .dashboard-navbar {
+            background: linear-gradient(90deg, #0a1428 0%, #001f3f 100%);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1a3a52;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            color: #CC9900;
+            font-weight: 700;
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-right a {
+            color: #D0D4D9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-right a:hover {
+            color: #CC9900;
+        }
+
+        .logout-btn {
+            background: #CC9900;
+            color: #0a1428;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #E6B800;
+        }
+
+        .dashboard-container {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            background: rgba(26, 35, 50, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid #1a3a52;
+        }
+
+        .welcome-section h1 {
+            color: #CC9900;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-section p {
+            color: #D0D4D9;
+        }
+
+        .club-video {
+            position: relative;
+            padding-top: 56.25%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1a3a52;
+            background: #000;
+            margin-top: 1rem;
+        }
+
+        .club-video iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .hero-video {
+            position: relative;
+            height: 320px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1a3a52;
+            background: #000;
+            margin-bottom: 1rem;
+        }
+        .hero-video iframe {
+            position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(26, 35, 50, 0.8);
+            border: 2px solid #1a3a52;
+            color: #D0D4D9;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #CC9900;
+            border-color: #CC9900;
+            color: #0a1428;
+        }
+
+        .carousel-section {
+            margin-bottom: 4rem;
+        }
+
+        .carousel-title {
+            color: #CC9900;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+        }
+
+        .carousel-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel-wrapper::-webkit-scrollbar-track {
+            background: rgba(26, 35, 50, 0.5);
+        }
+
+        .carousel-wrapper::-webkit-scrollbar-thumb {
+            background: #CC9900;
+            border-radius: 4px;
+        }
+
+        .player-card {
+            flex: 0 0 200px;
+            background: rgba(26, 35, 50, 0.8);
+            border: 1px solid #1a3a52;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .player-card:hover {
+            border-color: #CC9900;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(204, 153, 0, 0.2);
+        }
+
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #001f3f 0%, #0a1428 100%);
+        }
+
+        .player-info {
+            padding: 1.5rem;
+        }
+
+        .player-info h3 {
+            color: #CC9900;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .player-position {
+            color: #D0D4D9;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .player-stat {
+            display: flex;
+            justify-content: space-between;
+            color: #D0D4D9;
+            font-size: 0.85rem;
+            margin: 0.3rem 0;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(204, 153, 0, 0.8);
+            border: none;
+            border-radius: 50%;
+            color: #0a1428;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 1rem;
+        }
+
+        .carousel-btn:hover {
+            background: #E6B800;
+            transform: scale(1.1);
+        }
+
+        .no-players-msg {
+            text-align: center;
+            color: #D0D4D9;
+            padding: 2rem;
+            background: rgba(26, 35, 50, 0.5);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="dashboard-navbar">
+        <div class="navbar-title" style="display: flex; align-items: center;">
+            {% if club.logo_path %}
+            <img src="{{ url_for('static', filename=club.logo_path) }}" alt="{{ club.name }} logo" style="height: 40px; margin-right: 12px; border-radius: 4px;">
+            {% endif %}
+            🏀 {{ club.name }} Dashboard
+        </div>
+        <div class="navbar-right">
+            <span>Tier: <strong>{{ club.tier }}</strong></span>
+            <a href="/" style="font-size: 0.9rem;">View Website</a>
+            <form method="post" action="/logout" style="margin: 0;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <!-- Hero video removed per request -->
+            <h1>Welcome, {{ club.name }}!</h1>
+            <p>👥 Manage your club's players and view performance metrics.</p>
+            {% if video_url %}
+            <div class="club-video">
+                <iframe src="{{ video_url.replace('https://www.youtube.com/embed/', 'https://www.youtube-nocookie.com/embed/') }}" loading="lazy" title="Club Highlight" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="filter-section">
+            <button class="filter-btn active" onclick="filterPlayers('all')">All Players</button>
+            <button class="filter-btn" onclick="filterPlayers('scorers')">🎯 Top Scorers</button>
+            <button class="filter-btn" onclick="filterPlayers('passers')">📍 Top Passers</button>
+            <button class="filter-btn" onclick="filterPlayers('rebounds')">🏀 Rebound Leaders</button>
+            <button class="filter-btn" onclick="filterPlayers('defense')">🛡️ Defensive Leaders</button>
+        </div>
+
+        <!-- Top Players Carousel -->
+        <div class="carousel-section" data-category="all">
+            <div class="carousel-title">⭐ Top Players</div>
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel-all">
+                    {% for player in players %}
+                    <a href="/club/player/{{ player.id }}" style="text-decoration: none; color: inherit;">
+                    <div class="player-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                        <div class="player-info">
+                            <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                            <div class="player-position">{{ player.position }}</div>
+                            <div class="player-stat">
+                                <span>Points/Game:</span>
+                                <strong>{{ "%.1f" | format(player.stats[0].points_per_game) if player.stats else 0.0 }}</strong>
+                            </div>
+                            <div class="player-stat">
+                                <span>Assists/Game:</span>
+                                <strong>{{ "%.1f" | format(player.stats[0].assists_per_game) if player.stats else 0.0 }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Scorers Carousel -->
+        <div class="carousel-section" data-category="scorers">
+            <div class="carousel-title">🎯 Top Scorers</div>
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel-scorers">
+                    {% for player in players | sort(attribute='stats.points_per_game', reverse=true) | list %}
+                    <a href="/club/player/{{ player.id }}" style="text-decoration: none; color: inherit;">
+                    <div class="player-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                        <div class="player-info">
+                            <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                            <div class="player-position">{{ player.position }}</div>
+                            <div class="player-stat">
+                                <span>PPG:</span>
+                                <strong>{{ "%.1f" | format(player.stats[0].points_per_game) if player.stats else 0.0 }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Passers Carousel -->
+        <div class="carousel-section" data-category="passers">
+            <div class="carousel-title">📍 Top Playmakers</div>
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel-passers">
+                    {% for player in players | sort(attribute='stats.assists_per_game', reverse=true) | list %}
+                    <a href="/club/player/{{ player.id }}" style="text-decoration: none; color: inherit;">
+                    <div class="player-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                        <div class="player-info">
+                            <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                            <div class="player-position">{{ player.position }}</div>
+                            <div class="player-stat">
+                                <span>APG:</span>
+                                <strong>{{ "%.1f" | format(player.stats[0].assists_per_game) if player.stats else 0.0 }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Rebound Leaders Carousel -->
+        <div class="carousel-section" data-category="rebounds">
+            <div class="carousel-title">🏀 Rebound Leaders</div>
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel-rebounds">
+                    {% for player in players | sort(attribute='stats.rebounds_per_game', reverse=true) | list %}
+                    <a href="/club/player/{{ player.id }}" style="text-decoration: none; color: inherit;">
+                    <div class="player-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                        <div class="player-info">
+                            <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                            <div class="player-position">{{ player.position }}</div>
+                            <div class="player-stat">
+                                <span>RPG:</span>
+                                <strong>{{ "%.1f" | format(player.stats[0].rebounds_per_game) if player.stats else 0.0 }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Defensive Leaders Carousel -->
+        <div class="carousel-section" data-category="defense">
+            <div class="carousel-title">🛡️ Defensive Leaders</div>
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel-defense">
+                    {% for player in players | sort(attribute='stats.field_goal_percentage', reverse=true) | list %}
+                    <a href="/club/player/{{ player.id }}" style="text-decoration: none; color: inherit;">
+                    <div class="player-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
+                        <div class="player-info">
+                            <h3>{{ player.first_name }} {{ player.last_name }}</h3>
+                            <div class="player-position">{{ player.position }}</div>
+                            <div class="player-stat">
+                                <span>FG%:</span>
+                                <strong>{{ "%.1f" | format(player.stats[0].field_goal_percentage) if player.stats else 0.0 }}%</strong>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterPlayers(category) {
+            // Update active button styling
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show/hide carousel sections based on category
+            const carousels = document.querySelectorAll('.carousel-section');
+            carousels.forEach(carousel => {
+                const carouselCategory = carousel.getAttribute('data-category');
+                if (category === 'all' || carouselCategory === category) {
+                    carousel.style.display = 'block';
+                } else {
+                    carousel.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

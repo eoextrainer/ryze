@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunes Basketball - Player Directory</title>
+    <link rel="stylesheet" href="styles.css?v=20251209v2">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🏀 Dunes Basketball</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search players...">
+                <button id="searchBtn">Search</button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#players">Players</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-video">
+            <iframe src="https://www.youtube.com/embed/eFGNXvJwIP8?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&playlist=eFGNXvJwIP8&playsinline=1" title="Dunes Basketball Highlight" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <div class="hero-eyebrow">Dunes Basketball</div>
+                <h1>Discover elite players and watch the latest highlights</h1>
+                <p>Browse the directory, explore featured talent, and dive into game-changing plays from around the world.</p>
+                <div class="hero-actions">
+                    <button class="hero-btn" onclick="document.getElementById('players').scrollIntoView({behavior: 'smooth'})">
+                        Explore Players
+                    </button>
+                    <button class="hero-btn secondary" onclick="document.getElementById('stats').scrollIntoView({behavior: 'smooth'})">
+                        View Stats
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Players Section -->
+    <section class="featured">
+        <h2>Top 3 Players</h2>
+        <div class="featured-carousel">
+            <div class="featured-player">
+                <img src="res/player-1.png" alt="LeBron James">
+                <h3>LeBron James</h3>
+                <p class="position">Forward</p>
+                <p class="team">Los Angeles Lakers</p>
+                <div class="featured-rating">⭐ 9.8/10</div>
+            </div>
+            <div class="featured-player">
+                <img src="res/player-2.png" alt="Kevin Durant">
+                <h3>Kevin Durant</h3>
+                <p class="position">Forward</p>
+                <p class="team">Phoenix Suns</p>
+                <div class="featured-rating">⭐ 9.7/10</div>
+            </div>
+            <div class="featured-player">
+                <img src="res/player-3.png" alt="Giannis Antetokounmpo">
+                <h3>Giannis Antetokounmpo</h3>
+                <p class="position">Forward</p>
+                <p class="team">Milwaukee Bucks</p>
+                <div class="featured-rating">⭐ 9.6/10</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <h2>Filter Players by Position</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Players</button>
+                <button class="filter-btn" data-filter="guard">Guards</button>
+                <button class="filter-btn" data-filter="forward">Forwards</button>
+                <button class="filter-btn" data-filter="center">Centers</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Players Grid -->
+    <section class="players-grid-section" id="players">
+        <h2>Complete Player Directory</h2>
+        <div class="players-grid" id="playersGrid">
+            <!-- Player cards will be inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- League Statistics -->
+    <section class="stats-section" id="stats">
+        <h2>League Statistics</h2>
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Total Players</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Teams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">9.2</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6'7"</div>
+                <div class="stat-label">Avg Height</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Player Detail Modal -->
+    <div class="modal" id="playerModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="">
+                <div class="modal-info">
+                    <h2 id="modalName"></h2>
+                    <p><strong>Position:</strong> <span id="modalPosition"></span></p>
+                    <p><strong>Team:</strong> <span id="modalTeam"></span></p>
+                    <p><strong>Height:</strong> <span id="modalHeight"></span></p>
+                    <p><strong>Experience:</strong> <span id="modalExperience"></span></p>
+                    <div class="stats-details">
+                        <h3>Career Stats</h3>
+                        <p><strong>Points per Game:</strong> <span id="modalPPG"></span></p>
+                        <p><strong>Rebounds per Game:</strong> <span id="modalRPG"></span></p>
+                        <p><strong>Assists per Game:</strong> <span id="modalAPG"></span></p>
+                        <p><strong>Rating:</strong> <span id="modalRating"></span>/10</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="about">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Dunes Basketball</h4>
+                <p>Your premier source for basketball player information and statistics from around the world.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#players">Players</a></li>
+                    <li><a href="#stats">Statistics</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: info@dunesbasketball.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dunes Basketball. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

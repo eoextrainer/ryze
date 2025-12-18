@@ -1,0 +1,15 @@
+{
+  "name": "dunes",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint:js": "eslint . --ext .js,.mjs --max-warnings=0"
+  },
+  "devDependencies": {
+    "eslint": "^9.11.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^17.9.0",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}

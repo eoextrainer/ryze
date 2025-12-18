@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Dashboard - Dunes Basketball</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        body {
+            background: #0a1428;
+            color: #D0D4D9;
+        }
+
+        .player-navbar {
+            background: linear-gradient(90deg, #0a1428 0%, #001f3f 100%);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1a3a52;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            color: #CC9900;
+            font-weight: 700;
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-right a {
+            color: #D0D4D9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-right a:hover {
+            color: #CC9900;
+        }
+
+        .logout-btn {
+            background: #CC9900;
+            color: #0a1428;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #E6B800;
+        }
+
+        .hero-section {
+            height: 400px;
+            background: linear-gradient(135deg, #001f3f 0%, #0a1428 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CC9900;
+            font-size: 2rem;
+            font-weight: 700;
+            border-bottom: 2px solid #1a3a52;
+        }
+
+        .dashboard-container {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            background: rgba(26, 35, 50, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid #1a3a52;
+        }
+
+        .profile-photo {
+            text-align: center;
+        }
+
+        .profile-photo img {
+            width: 200px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #CC9900;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-info h2 {
+            color: #CC9900;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid #CC9900;
+        }
+
+        .detail-label {
+            color: #D0D4D9;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: #CC9900;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .stats-section {
+            background: rgba(26, 35, 50, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid #1a3a52;
+        }
+
+        .stats-title {
+            color: #CC9900;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(204, 153, 0, 0.1) 0%, rgba(0, 35, 63, 0.2) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #CC9900;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            color: #CC9900;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-label {
+            color: #D0D4D9;
+            font-size: 0.9rem;
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .performance-table thead {
+            background: rgba(204, 153, 0, 0.1);
+        }
+
+        .performance-table th {
+            color: #CC9900;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #1a3a52;
+            font-weight: 600;
+        }
+
+        .performance-table td {
+            color: #D0D4D9;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #1a3a52;
+        }
+
+        .performance-table tr:hover {
+            background: rgba(204, 153, 0, 0.05);
+        }
+
+        .resume-section {
+            background: rgba(26, 35, 50, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid #1a3a52;
+        }
+
+        .resume-title {
+            color: #CC9900;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resume-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #CC9900;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .resume-club-name {
+            color: #CC9900;
+            font-weight: 600;
+        }
+
+        .resume-dates {
+            color: #D0D4D9;
+            font-size: 0.9rem;
+        }
+
+        .resume-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-current {
+            background: #51cf66;
+            color: #0a1428;
+        }
+
+        .status-future {
+            background: #CC9900;
+            color: #0a1428;
+        }
+
+        .status-past {
+            background: #1a3a52;
+            color: #D0D4D9;
+        }
+
+        .news-section {
+            background: rgba(26, 35, 50, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid #1a3a52;
+        }
+
+        .news-title {
+            color: #CC9900;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid #CC9900;
+        }
+
+        .news-item h4 {
+            color: #CC9900;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-item .news-meta {
+            color: #D0D4D9;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-item p {
+            color: #D0D4D9;
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .performance-table {
+                font-size: 0.9rem;
+            }
+
+            .performance-table th,
+            .performance-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="player-navbar">
+        <div class="navbar-title">🏀 {{ club.name }} - Player Profile</div>
+        <div class="navbar-right">
+            <a href="/club/dashboard" style="color: #CC9900; text-decoration: none; font-weight: 600;">← Back to Dashboard</a>
+            <a href="/" style="font-size: 0.9rem;">View Website</a>
+            <form method="post" action="/logout" style="margin: 0;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        {{ player.first_name }} {{ player.last_name }} - {{ player.position }}
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-photo">
+                <img src="{{ url_for('static', filename='res/player-1.png') }}" alt="{{ player.first_name }}">
+            </div>
+            <div class="profile-info">
+                <h2>{{ player.first_name }} {{ player.last_name }}</h2>
+                <p style="color: #CC9900; font-size: 1.1rem;">{{ player.position }}</p>
+                <div class="profile-detail">
+                    <div class="detail-item">
+                        <div class="detail-label">Date of Birth</div>
+                        <div class="detail-value">{{ player.date_of_birth }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Nationality</div>
+                        <div class="detail-value">{{ player.nationality }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Height</div>
+                        <div class="detail-value">{{ player.height }} cm</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Weight</div>
+                        <div class="detail-value">{{ player.weight }} kg</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Subscription Tier</div>
+                        <div class="detail-value">
+                            {% if player.subscription_tier == 'tier1' %}
+                                Premium (50€)
+                            {% elif player.subscription_tier == 'tier2' %}
+                                Pro (29.99€)
+                            {% else %}
+                                Basic (9.99€)
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value" style="font-size: 0.9rem;">{{ player.email }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stats-title">📊 Career Statistics</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">{{ "%.1f" | format(player.stats[0].points_per_game) if player.stats else 0.0 }}</div>
+                    <div class="stat-label">Points Per Game</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ "%.1f" | format(player.stats[0].assists_per_game) if player.stats else 0.0 }}</div>
+                    <div class="stat-label">Assists Per Game</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ "%.1f" | format(player.stats[0].rebounds_per_game) if player.stats else 0.0 }}</div>
+                    <div class="stat-label">Rebounds Per Game</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ "%.1f" | format(player.stats[0].field_goal_percentage) if player.stats else 0.0 }}%</div>
+                    <div class="stat-label">Field Goal %</div>
+                </div>
+            </div>
+
+            <div class="stats-title" style="margin-top: 2rem;">📈 Last 10 Games</div>
+            <table class="performance-table">
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Opponent</th>
+                        <th>Points</th>
+                        <th>Assists</th>
+                        <th>Rebounds</th>
+                        <th>FG%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for perf in performances %}
+                    <tr>
+                        <td>Game {{ loop.index }}</td>
+                        <td>{{ perf.opponent }}</td>
+                        <td>{{ perf.points }}</td>
+                        <td>{{ perf.assists }}</td>
+                        <td>{{ perf.rebounds }}</td>
+                        <td>{{ "%.1f" | format((perf.field_goals_made / perf.field_goals_attempted * 100) if perf.field_goals_attempted > 0 else 0) }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Resume Section -->
+        <div class="resume-section">
+            <div class="resume-title">🏆 Club Resume</div>
+            {% for resume_item in resume %}
+            <div class="resume-item">
+                <div>
+                    <div class="resume-club-name">{{ resume_item.club.name }}</div>
+                    <div class="resume-dates">{{ resume_item.season_start }} - {{ resume_item.season_end }}</div>
+                </div>
+                <div>
+                    {% if resume_item.is_current %}
+                        <span class="resume-status status-current">Current</span>
+                    {% elif resume_item.is_future %}
+                        <span class="resume-status status-future">Future</span>
+                    {% else %}
+                        <span class="resume-status status-past">Past</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- News Section -->
+        <div class="news-section">
+            <div class="news-title">📰 Latest News</div>
+            {% for news_item in news[:5] %}
+            <div class="news-item">
+                <h4>{{ news_item.title }}</h4>
+                <div class="news-meta">{{ news_item.created_at.strftime('%B %d, %Y') }}</div>
+                <p>{{ news_item.content[:150] }}...</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

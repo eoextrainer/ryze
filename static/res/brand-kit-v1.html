@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand Template — Deep Blue & Gold Accent</title>
+  <style>
+    /* ========== COLOR PALETTE / VARIABLES ========== */
+    :root {
+      --color-primary-dark: #00233E;
+      --color-primary:      #003366;
+      --color-accent:       #FFCC00;
+
+      --color-white:        #FFFFFF;
+      --color-gray-light:   #F5F6F8;
+      --color-gray-medium:  #E0E2E5;
+      --color-gray-dark:    #2F3235;
+
+      /* spacing / grid variables */
+      --spacing: 1rem;
+      --max-width: 1200px;
+    }
+
+    /* Reset & base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--color-white);
+      color: var(--color-gray-dark);
+      line-height: 1.6;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout helpers */
+    .container {
+      width: 90%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--spacing) 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--spacing);
+    }
+
+    /* ========== HEADER / NAVBAR ========== */
+    header.site-header {
+      background-color: var(--color-primary-dark);
+      color: var(--color-white);
+      padding: var(--spacing);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header.site-header .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+    header nav ul li a {
+      color: var(--color-white);
+      padding: 0.5rem 1rem;
+    }
+    header nav ul li a:hover {
+      background-color: var(--color-primary);
+      border-radius: 4px;
+    }
+    .cta-button {
+      background-color: var(--color-accent);
+      color: var(--color-primary-dark);
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cta-button:hover {
+      opacity: 0.9;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      position: relative;
+      background-color: var(--color-primary-dark);
+      color: var(--color-white);
+      padding: calc(var(--spacing) * 4) 0;
+      text-align: center;
+    }
+    .hero .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing);
+    }
+    .hero .hero-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: var(--spacing);
+    }
+    .hero .hero-button {
+      margin-top: var(--spacing);
+      background-color: var(--color-accent);
+      color: var(--color-primary-dark);
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .hero .hero-button:hover {
+      opacity: 0.9;
+    }
+
+    /* ========== CARD COMPONENT ========== */
+    .card {
+      background-color: var(--color-white);
+      border: 1px solid var(--color-gray-medium);
+      border-radius: 8px;
+      padding: var(--spacing);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      margin-bottom: var(--spacing);
+      color: var(--color-primary-dark);
+    }
+    .card p {
+      color: var(--color-gray-dark);
+    }
+
+    /* ========== CONTENT SECTION ========== */
+    section.content-section {
+      padding: var(--spacing) 0;
+    }
+    section.content-section.bg-light {
+      background-color: var(--color-gray-light);
+    }
+
+    /* ========== FOOTER ========== */
+    footer.site-footer {
+      background-color: var(--color-primary-dark);
+      color: var(--color-white);
+      padding: var(--spacing);
+      text-align: center;
+    }
+    footer.site-footer a {
+      color: var(--color-accent);
+    }
+
+    /* ========== RESPONSIVE GRID for cards / features ========== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing);
+    }
+    @media (min-width: 768px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / NAVBAR -->
+  <header class="site-header">
+    <div class="container nav-inner">
+      <div class="logo">MyBrand</div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="cta-button">Get the App</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1 class="hero-title">Welcome to MyBrand</h1>
+      <p class="hero-subtitle">Your modern, elegant digital experience awaits.</p>
+      <button class="hero-button">Get Started</button>
+    </div>
+  </section>
+
+  <!-- FEATURES / CONTENT CARDS SECTION -->
+  <section class="content-section bg-light">
+    <div class="container">
+      <h2>Features</h2>
+      <div class="cards-grid">
+        <div class="card">
+          <h3>Feature One</h3>
+          <p>Short description of feature one. Explain value proposition, benefits, etc.</p>
+        </div>
+        <div class="card">
+          <h3>Feature Two</h3>
+          <p>Short description of feature two. Explain what makes it special.</p>
+        </div>
+        <div class="card">
+          <h3>Feature Three</h3>
+          <p>Short description of feature three. Great for highlighting main functionalities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANOTHER CONTENT SECTION (e.g. testimonials / about) -->
+  <section class="content-section">
+    <div class="container">
+      <h2>About Us</h2>
+      <p>This is a placeholder for the about section. Here you can describe your mission, values, story, etc.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 MyBrand. All rights reserved.</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

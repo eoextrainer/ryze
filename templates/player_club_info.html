@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ club.name }} - Club Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        body { background: #0a1428; color: #d0d4d9; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        .club-hero { margin-top: 60px; padding: 3rem 1.5rem 1rem; background: linear-gradient(135deg, rgba(0, 31, 63, 0.85), rgba(10, 20, 40, 0.95)); border-bottom: 1px solid #1a3a52; box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+        .club-hero-inner { max-width: 1200px; margin: 0 auto; display: grid; gap: 1.5rem; align-items: center; grid-template-columns: 1.6fr 1fr; }
+        .club-title { display: flex; gap: 1rem; align-items: center; }
+        .club-title img { width: 84px; height: 84px; object-fit: contain; background: rgba(0,0,0,0.25); border-radius: 14px; border: 1px solid #1a3a52; padding: 0.75rem; }
+        .club-meta { color: #9cb3c9; }
+        .badge { display:inline-block; padding: 0.4rem 0.9rem; border-radius: 999px; background: rgba(204, 153, 0, 0.18); border: 1px solid #cc9900; color: #cc9900; font-weight: 700; font-size: 0.9rem; }
+        .back-link { color: #36f399; text-decoration: none; font-weight: 700; font-size: 0.95rem; }
+        .back-link:hover { text-decoration: underline; }
+        .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 0.9rem; }
+        .stat-chip { background: rgba(0, 234, 255, 0.08); border: 1px solid #1a3a52; border-radius: 12px; padding: 0.9rem; }
+        .stat-chip .label { color: #9cb3c9; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; }
+        .stat-chip .value { color: #36f399; font-size: 1.25rem; font-weight: 800; }
+
+        .page-shell { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 3rem; display: grid; gap: 2rem; }
+        .grid-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.5rem; align-items: start; }
+        .panel { background: rgba(26, 35, 50, 0.8); border: 1px solid #1a3a52; border-radius: 12px; padding: 1.5rem; box-shadow: 0 18px 50px rgba(0,0,0,0.35); }
+        .panel h3 { margin-top: 0; color: #cc9900; margin-bottom: 1rem; }
+        .video-wrapper { position: relative; padding-top: 56.25%; border-radius: 12px; overflow: hidden; border: 1px solid #1a3a52; background: #000; }
+        .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+        .info-card { border: 1px solid #1a3a52; border-radius: 10px; padding: 1rem; background: linear-gradient(135deg, rgba(0, 35, 63, 0.25), rgba(204, 153, 0, 0.05)); }
+        .info-card .label { color: #9cb3c9; font-size: 0.85rem; text-transform: uppercase; }
+        .info-card .value { color: #d0d4d9; font-weight: 700; font-size: 1.05rem; }
+
+        .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+        .list-item { padding: 0.9rem 1rem; border: 1px solid #1a3a52; border-radius: 10px; background: rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+        .list-item strong { color: #cc9900; }
+        .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .pill { padding: 0.4rem 0.75rem; border-radius: 999px; border: 1px solid #1a3a52; background: rgba(0, 234, 255, 0.08); color: #d0d4d9; font-weight: 600; }
+        .filters { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .filter-btn { padding: 0.4rem 0.85rem; border-radius: 10px; border: 1px solid #1a3a52; background: rgba(0,0,0,0.18); color: #d0d4d9; cursor: pointer; font-weight: 700; transition: all 0.2s ease; }
+        .filter-btn.active, .filter-btn:hover { border-color: #cc9900; color: #cc9900; box-shadow: 0 0 0 1px rgba(204, 153, 0, 0.3); }
+        .players { display: grid; gap: 0.75rem; }
+        .player-card { padding: 1rem; border-radius: 10px; border: 1px solid #1a3a52; background: linear-gradient(135deg, rgba(204, 153, 0, 0.08), rgba(0, 35, 63, 0.22)); display: grid; grid-template-columns: 1fr auto; gap: 0.25rem; }
+        .player-card .meta { color: #9cb3c9; font-size: 0.9rem; }
+        .player-card .tag { display: inline-block; margin-top: 0.35rem; padding: 0.35rem 0.65rem; border-radius: 999px; border: 1px solid #1a3a52; background: rgba(0,0,0,0.25); color: #d0d4d9; font-weight: 600; }
+        .player-card .grade { color: #36f399; font-weight: 800; }
+
+        @media (max-width: 960px) {
+            .club-hero-inner { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .hero-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <section class="club-hero">
+        <div class="club-hero-inner">
+            <div>
+                <a class="back-link" href="{{ url_for('player_dashboard') }}">Back to dashboard</a>
+                <div class="club-title">
+                    {% if club.logo_path %}
+                    <img src="{{ url_for('static', filename=club.logo_path) }}" alt="{{ club.name }} logo">
+                    {% endif %}
+                    <div>
+                        <h1 style="margin: 0; color: #f8fafc;">{{ club.name }}</h1>
+                        <div class="club-meta">{{ club.city }} - {{ club.tier }}</div>
+                        <span class="badge">Club profile</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-chip">
+                    <div class="label">Roster Needs</div>
+                    <div class="value">G / F</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="label">Open Spots</div>
+                    <div class="value">2</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="label">Last Season</div>
+                    <div class="value">18-8</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-shell">
+        <div class="grid-2">
+            <div class="panel">
+                <h3>Featured Highlight</h3>
+                <div class="video-wrapper">
+                    <iframe src="{{ (video_url or '') .replace('https://www.youtube.com/embed/', 'https://www.youtube-nocookie.com/embed/') }}" loading="lazy" title="Club Highlight" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="panel">
+                <h3>Club Snapshot</h3>
+                <div class="info-grid">
+                    <div class="info-card"><div class="label">City</div><div class="value">{{ club.city }}</div></div>
+                    <div class="info-card"><div class="label">Tier</div><div class="value">{{ club.tier }}</div></div>
+                    <div class="info-card"><div class="label">Contact</div><div class="value">{{ club.email }}</div></div>
+                    <div class="info-card"><div class="label">Facilities</div><div class="value">Pro gym, physio, video</div></div>
+                    <div class="info-card"><div class="label">Culture</div><div class="value">Up-tempo, team-first, development heavy</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="panel">
+                <h3>Season Performance</h3>
+                <div class="pill-row">
+                    <span class="pill">Pace: Top 3</span>
+                    <span class="pill">Defense: 93.1 DRtg</span>
+                    <span class="pill">Offense: 114.8 ORtg</span>
+                </div>
+                <ul class="list">
+                    <li class="list-item"><span>Win streak</span><strong>6 games</strong></li>
+                    <li class="list-item"><span>Home record</span><strong>12 - 2</strong></li>
+                    <li class="list-item"><span>Road record</span><strong>6 - 6</strong></li>
+                    <li class="list-item"><span>Playoff berth</span><strong>Clinched</strong></li>
+                </ul>
+            </div>
+            <div class="panel">
+                <h3>Facilities & Offering</h3>
+                <ul class="list">
+                    <li class="list-item"><span>Performance staff</span><strong>Strength / physio onsite</strong></li>
+                    <li class="list-item"><span>Housing</span><strong>Downtown apartments</strong></li>
+                    <li class="list-item"><span>Travel</span><strong>Charter for playoffs</strong></li>
+                    <li class="list-item"><span>Academic</span><strong>University partner access</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Player Fit Board</h3>
+            <div class="filters">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Guards</button>
+                <button class="filter-btn">Wings</button>
+                <button class="filter-btn">Bigs</button>
+                <button class="filter-btn">Two-way</button>
+            </div>
+            <div class="players">
+                <div class="player-card">
+                    <div>
+                        <strong>Lead Guard</strong>
+                        <div class="meta">Pick-and-roll creator - pace engine</div>
+                        <span class="tag">Need: Immediate</span>
+                    </div>
+                    <div class="grade">Priority A</div>
+                </div>
+                <div class="player-card">
+                    <div>
+                        <strong>3&D Wing</strong>
+                        <div class="meta">6'6"+ length - switchable</div>
+                        <span class="tag">Need: Next window</span>
+                    </div>
+                    <div class="grade">Priority B</div>
+                </div>
+                <div class="player-card">
+                    <div>
+                        <strong>Stretch 4/5</strong>
+                        <div class="meta">Pick-and-pop - rim deterrence</div>
+                        <span class="tag">Need: Depth</span>
+                    </div>
+                    <div class="grade">Priority B</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

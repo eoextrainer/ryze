@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dunes Basketball</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        .login-container {
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a1428 0%, #001f3f 100%);
+        }
+
+        .login-box {
+            margin: auto;
+            background: rgba(26, 35, 50, 0.95);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #1a3a52;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #CC9900;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .user-type-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .user-type-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #1a3a52;
+            background: transparent;
+            color: #D0D4D9;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .user-type-btn.active {
+            background: #CC9900;
+            border-color: #CC9900;
+            color: #0a1428;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #D0D4D9;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #1a3a52;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #CC9900;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #CC9900;
+            color: #0a1428;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            background: #E6B800;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(204, 153, 0, 0.3);
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .success-msg {
+            color: #51cf66;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .demo-credentials {
+            background: rgba(204, 153, 0, 0.1);
+            border: 1px solid #CC9900;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .demo-credentials h4 {
+            color: #CC9900;
+            margin-bottom: 1rem;
+        }
+
+        .demo-credentials p {
+            color: #D0D4D9;
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-link a {
+            color: #CC9900;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #E6B800;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>🏀 Dunes Login</h2>
+            
+            <div class="user-type-toggle">
+                <button class="user-type-btn active" onclick="switchUserType('club')">Club Login</button>
+                <button class="user-type-btn" onclick="switchUserType('player')">Player Login</button>
+            </div>
+
+            <div id="error-msg" class="error-msg" style="display: none;"></div>
+            <div id="success-msg" class="success-msg" style="display: none;"></div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <input type="hidden" id="user-type" value="club">
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="demo-credentials">
+                <h4>Demo Credentials</h4>
+                <p><strong>Club:</strong> contact@parisbball.fr / password123</p>
+                <p><strong>Player:</strong> player1@dunes.fr / password123</p>
+            </div>
+
+            <div class="back-link">
+                <a href="/">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchUserType(type) {
+            document.getElementById('user-type').value = type;
+            document.querySelectorAll('.user-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const userType = document.getElementById('user-type').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_type: userType,
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('success-msg').textContent = 'Login successful! Redirecting...';
+                    document.getElementById('success-msg').style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 1000);
+                } else {
+                    document.getElementById('error-msg').textContent = data.message || 'Login failed';
+                    document.getElementById('error-msg').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                document.getElementById('error-msg').textContent = 'An error occurred. Please try again.';
+                document.getElementById('error-msg').style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>

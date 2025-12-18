@@ -1,0 +1,12 @@
+:root {
+  /* Couleurs principales / Brand colors inspired by Tonsser */
+  --color-primary-dark: #00233E;     /* Fond sombre / background principal – typiquement nav header, sections clés */
+  --color-primary:      #003366;     /* Accent principal (liens, boutons primaires, hover) */
+  --color-accent:       #FFCC00;     /* Accent / highlight, éléments CTA (call-to-action), icônes, détails */
+
+  /* Neutres / Texte / Arrière-plans secondaires */
+  --color-white:        #FFFFFF;     /* Texte sur fond sombre, fonds clairs */
+  --color-gray-light:   #F5F6F8;     /* Fond clair pour cartes, sections, backgrounds secondaires */
+  --color-gray-medium:  #E0E2E5;     /* Bordures, backgrounds subtils, séparateurs */
+  --color-gray-dark:    #2F3235;     /* Texte secondaire, placeholders, icônes secondaires */
+}

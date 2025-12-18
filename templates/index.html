@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunes Basketball - Elite Player Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=20251210">
+    <style>
+        /* Carousel polish */
+        #clubCarousel { scroll-padding: 0 48px; }
+        .carousel-item { transition: transform 200ms ease; }
+        .carousel-item:focus-within, .carousel-item:hover { transform: scale(1.01); }
+        .carousel-arrow { opacity: 0.75; transition: opacity 200ms ease, background 200ms ease; }
+        .carousel-arrow:hover { opacity: 1; background: rgba(0,0,0,0.6); }
+        .carousel-arrow:active { background: rgba(0,0,0,0.7); }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🏀 Dunes Basketball</div>
+            <div class="nav-links-right">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/login" class="nav-link btn-login">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== SECTION 1: HERO VIDEO ONLY ==================== -->
+    <section class="hero-split video-bg" id="home">
+        <div class="video-bg__frame">
+            <iframe src="https://www.youtube-nocookie.com/embed/A3F_6V2n8t0?autoplay=1&mute=1&loop=1&controls=0&rel=0&playlist=A3F_6V2n8t0&playsinline=1" loading="eager" title="Background Highlight" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="position:absolute; inset:0; width:100%; height:100%;" allowfullscreen></iframe>
+        </div>
+        <div class="video-bg__overlay">
+            <div class="hero-video-content">
+                <h2 class="hero-video-tagline">From Home to Hope</h2>
+                <p class="hero-video-paragraph">Every player has a story waiting to be told. Every performance is a chance to showcase your true potential. Every dream deserves a platform where talent speaks louder than hype, verified data opens doors, and young athletes transform opportunity into reality.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Club Highlights section removed per request -->
+    <!-- ==================== SECTION 2: HERO CONTENT ==================== -->
+    <section class="hero-content-section">
+        <div class="hero-content-wrapper">
+            <div class="hero-left">
+                <div class="eyebrow">Dunes Basketball</div>
+                <h1>Discover elite players & connect with clubs</h1>
+                <p>Showcase your game, track your stats, and unlock pro opportunities with verified highlights and data-driven talent ID.</p>
+                <div class="cta-row">
+                    <a href="/login" class="cta-btn">Login Now</a>
+                    <a href="#journey" class="cta-btn ghost">Explore Clubs</a>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-card">
+                    <span class="tag">Next-gen platform</span>
+                    <h3>Players. Clubs. One court.</h3>
+                    <p>Built for visibility, trust, and faster decisions.</p>
+                    <div class="hero-stats">
+                        <div><strong>2M</strong><span>Profiles</span></div>
+                        <div><strong>20M</strong><span>Performances</span></div>
+                        <div><strong>100M</strong><span>Monthly views</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="metric-ribbon">
+            <div class="metric-item">
+                <span class="metric-label">Verified stats</span>
+                <span class="metric-value">Game-by-game breakdowns</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Highlights</span>
+                <span class="metric-value">Film to support every number</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Club-ready</span>
+                <span class="metric-value">Tiered access for scouting</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 3: VIDEO SHOWCASE (moved directly after hero) ==================== -->
+    <section class="section shell" id="highlights">
+        <div class="section-head">
+            <div class="eyebrow">Highlights</div>
+            <h2>Game tape that tells the story</h2>
+            <p>Tap through five curated basketball highlights. Study the tape, see the club behind each sequence, and discover rising talent.</p>
+        </div>
+        <div class="video-carousel single">
+            <button class="video-nav prev" onclick="prevVideo()">❮</button>
+            <div class="video-track" id="videoTrack">
+                <div class="video-slide" data-idx="0">
+                    <div class="video-frame">
+                        <iframe src="https://www.youtube-nocookie.com/embed/3N1KfHl-7mk?rel=0&modestbranding=1&playsinline=1&controls=1" loading="lazy" title="N1 Highlights" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <div class="club-chip"><img src="{{ url_for('static', filename='res/logo/logo-1.png') }}" alt="Paris Basketball logo"></div>
+                        <div>
+                            <h3>Paris Basketball</h3>
+                            <p>LNB Pro A - Fast-paced transition play</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-slide" data-idx="1">
+                    <div class="video-frame">
+                        <iframe src="https://www.youtube-nocookie.com/embed/q5WhqF-5vq8?rel=0&modestbranding=1&playsinline=1&controls=1" loading="lazy" title="Pro A Highlights" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <div class="club-chip"><img src="{{ url_for('static', filename='res/logo/logo-2.png') }}" alt="Monaco Basketball logo"></div>
+                        <div>
+                            <h3>Monaco Basketball</h3>
+                            <p>Euro focus - Precision half-court sets</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-slide" data-idx="2">
+                    <div class="video-frame">
+                        <iframe src="https://www.youtube-nocookie.com/embed/3u2AG4rVn-M?rel=0&modestbranding=1&playsinline=1&controls=1" loading="lazy" title="Pro B Highlights" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <div class="club-chip"><img src="{{ url_for('static', filename='res/logo/logo-3.png') }}" alt="ASVEL Lyon logo"></div>
+                        <div>
+                            <h3>ASVEL Lyon</h3>
+                            <p>Defensive clamps - Switch-heavy schemes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-slide" data-idx="3">
+                    <div class="video-frame">
+                        <iframe src="https://www.youtube-nocookie.com/embed/UhlpcSene24?rel=0&modestbranding=1&playsinline=1&controls=1" loading="lazy" title="N1 Highlights" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <div class="club-chip"><img src="{{ url_for('static', filename='res/logo/logo-4.png') }}" alt="Gravelines-Dunkerque logo"></div>
+                        <div>
+                            <h3>Gravelines-Dunkerque</h3>
+                            <p>Wing dominance - Relentless rebounding</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-slide" data-idx="4">
+                    <div class="video-frame">
+                        <iframe src="https://www.youtube-nocookie.com/embed/Jx8ZjkzITL0?rel=0&modestbranding=1&playsinline=1&controls=1" loading="lazy" title="N2 Highlights" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-meta">
+                        <div class="club-chip"><img src="{{ url_for('static', filename='res/logo/logo-5.png') }}" alt="Cholet Basket logo"></div>
+                        <div>
+                            <h3>Cholet Basket</h3>
+                            <p>Spacing & flow - Read-and-react offense</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="video-nav next" onclick="nextVideo()">❯</button>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 4: PLATFORM FEATURES ==================== -->
+    <section class="section shell">
+        <div class="section-head">
+            <div class="eyebrow">Platform</div>
+            <h2>Everything you need to showcase and scout</h2>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="tag">Players</span>
+                <h3>Own your profile</h3>
+                <p>Upload highlights, track stats, and present a club-ready identity built on verified data.</p>
+                <a class="link-arrow" href="/login">Start now</a>
+            </div>
+            <div class="feature-card">
+                <span class="tag">Clubs</span>
+                <h3>Data-backed scouting</h3>
+                <p>Filter by tier, surface verified performances, and watch film to move faster on recruiting.</p>
+                <a class="link-arrow" href="/login">Scout talent</a>
+            </div>
+            <div class="feature-card">
+                <span class="tag">Highlights</span>
+                <h3>Game tape in context</h3>
+                <p>Every clip links back to real numbers—giving coaches the full story behind the play.</p>
+                <a class="link-arrow" href="#highlights">Watch highlights</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 5: JOURNEY ==================== -->
+    <section class="journey-section" id="journey">
+        <div class="journey-grid">
+            <div class="journey-copy">
+                <div class="eyebrow">Where youth basketball lives</div>
+                <h2>The journey from home to hope</h2>
+                <p>Build your ultimate profile, collect highlights, and power your visibility with community-driven data. Every performance moves you closer to the right club.</p>
+                <div class="journey-ctas">
+                    <a href="/login" class="journey-cta">Join as Player</a>
+                    <a href="/login" class="journey-cta secondary">Join as Club</a>
+                </div>
+                <div class="journey-stats">
+                    <div class="journey-stat">
+                        <h3>2M</h3>
+                        <p>Player profiles</p>
+                    </div>
+                    <div class="journey-stat">
+                        <h3>20M</h3>
+                        <p>Performances tracked</p>
+                    </div>
+                    <div class="journey-stat">
+                        <h3>100M</h3>
+                        <p>Monthly content views</p>
+                    </div>
+                </div>
+            </div>
+            <div class="journey-card-grid">
+                <div class="journey-card">
+                    <h4>Talent ID - Powered by community data</h4>
+                    <p>Our algorithm surfaces prospects based on real performances, not hype. Get discovered through verified stats and game film.</p>
+                    <div class="journey-badge-row">
+                        <span class="journey-badge">Verified stats</span>
+                        <span class="journey-badge">Game film</span>
+                        <span class="journey-badge">Fair shot</span>
+                    </div>
+                </div>
+                <div class="journey-card">
+                    <h4>Showcase & Elevate</h4>
+                    <p>Own your narrative with dynamic highlights, badges, and season-by-season growth—built to impress scouts and coaches.</p>
+                    <div class="journey-badge-row">
+                        <span class="journey-badge">Highlights</span>
+                        <span class="journey-badge">Badges</span>
+                        <span class="journey-badge">Progression</span>
+                    </div>
+                </div>
+                <div class="journey-card">
+                    <h4>Opportunities that travel</h4>
+                    <p>Standout players get invitations to elite showcases and trials—mirroring the Tonsser United pathway for the next basketball wave.</p>
+                    <div class="journey-badge-row">
+                        <span class="journey-badge">Invites</span>
+                        <span class="journey-badge">Trials</span>
+                        <span class="journey-badge">Showcases</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 6: CTA BANNER ==================== -->
+    <section class="cta-banner">
+        <div class="cta-banner__inner">
+            <div>
+                <div class="eyebrow">Ready to move?</div>
+                <h3>Log in and step onto the Dunes court.</h3>
+                <p>One platform for players to shine and clubs to recruit with confidence.</p>
+            </div>
+            <a href="/login" class="cta-btn">Login Now</a>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 7: FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-shell">
+            <div class="footer-brand">
+                <div class="footer-logo">Dunes Basketball</div>
+                <p>Elite recruiting platform built for players who want to be seen and clubs that need real signal.</p>
+                <div class="footer-badge">Proven Pathways</div>
+            </div>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#highlights">Highlights</a></li>
+                        <li><a href="#journey">Player Journey</a></li>
+                        <li><a href="/login">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Club Playbook</a></li>
+                        <li><a href="#">Player Starter Kit</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Media Hub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Social</h4>
+                    <ul>
+                        <li><a href="#">X / Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-cta-card">
+                <h4>Ready to showcase?</h4>
+                <p>Drop your latest film and elevate your visibility with verified club eyes.</p>
+                <a href="/login" class="cta-btn">Login to submit</a>
+            </div>
+        </div>
+        <div class="footer-meta">
+            <p>&copy; 2025 Dunes Basketball Platform</p>
+            <div class="social-links">
+                <a href="#" class="social-link">Privacy</a>
+                <a href="#" class="social-link">Terms</a>
+                <a href="#" class="social-link">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const videoTrack = document.getElementById('videoTrack');
+        const videoSlides = document.querySelectorAll('.video-slide');
+        let videoIndex = 0;
+
+        function updateVideoCarousel() {
+            if (!videoTrack) return;
+            videoSlides.forEach((slide, idx) => {
+                slide.style.display = idx === videoIndex ? 'block' : 'none';
+            });
+        }
+
+        function nextVideo() {
+            videoIndex = (videoIndex + 1) % videoSlides.length;
+            updateVideoCarousel();
+        }
+
+        function prevVideo() {
+            videoIndex = (videoIndex - 1 + videoSlides.length) % videoSlides.length;
+            updateVideoCarousel();
+        }
+
+        updateVideoCarousel();
+    </script>
+</body>
+</html>
