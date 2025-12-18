@@ -15,6 +15,7 @@ import os
 from datetime import datetime, timedelta
 import random
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ryze-basketball-secret-key-2025'
 
@@ -33,6 +34,18 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+# === TEMPORARY SEED ROUTE FOR RENDER ===
+@app.route('/seed_db')
+def seed_db_route():
+    try:
+        from scripts.seed_db import ensure_defaults
+        with app.app_context():
+            db.create_all()
+            ensure_defaults()
+        return 'Database seeded successfully! Remove this route after use.'
+    except Exception as e:
+        return f'Error seeding database: {e}', 500
 
 # Simple verification route to check DB connectivity and basic table counts
 @app.route('/verify_db')
