@@ -103,9 +103,9 @@
         <!-- Tiles Section: Players -->
         <div class="tiles-section">
             <div class="tiles-title">Players</div>
-            <div class="tile-row">
+            <div class="tile-row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;">
                 {% for player in players %}
-                <a href="/player/dashboard?user_id={{ player.id }}" style="text-decoration:none;color:inherit;">
+                <a href="/club/player/{{ player.id }}" style="text-decoration:none;color:inherit;">
                 <div class="player-card">
                     <img src="{{ url_for('static', filename='res/player-' ~ ((player.id - 1) % 8 + 1) ~ '.png') }}" alt="{{ player.first_name }}" class="player-image">
                     <div class="player-info">
