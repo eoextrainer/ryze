@@ -80,3 +80,5 @@ if grep -i "error" "$LOGFILE"; then
 else
   echo "All steps completed successfully."
 fi
+
+git add -A . && git commit -m "Stage and commit all changes via error-check.sh" && git push git@github.com:eoextrainer/ryze.git main

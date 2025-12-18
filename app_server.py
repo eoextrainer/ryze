@@ -36,10 +36,74 @@ db = SQLAlchemy(app)
 @app.route('/seed_db')
 def seed_db_route():
     try:
-        from scripts.seed_db import ensure_defaults
         with app.app_context():
             db.create_all()
-            ensure_defaults()
+            # --- Seeding logic directly here ---
+            from werkzeug.security import generate_password_hash
+            from datetime import datetime
+            # Seed clubs
+            clubs_data = [
+                ("Paris Basketball", "contact@parisbball.fr", "Pro A"),
+                ("Monaco Basketball", "contact@monaco.fr", "Pro A"),
+                ("Asvel Lyon", "contact@asvel.fr", "Pro A"),
+                ("Strasbourg IG", "contact@strasbourg.fr", "Pro B"),
+                ("Dijon Basketball", "contact@dijon.fr", "Pro B"),
+                ("Nanterre 92", "contact@nanterre.fr", "Pro B"),
+                ("Boulogne-Levallois", "contact@boulogne.fr", "N1"),
+                ("Saint-Quentin", "contact@stquentin.fr", "N1"),
+                ("Roanne", "contact@roanne.fr", "N1"),
+                ("Toulouse", "contact@toulouse.fr", "N2"),
+                ("Marseille", "contact@marseille.fr", "N2"),
+                ("Bordeaux", "contact@bordeaux.fr", "N2"),
+                ("Lille", "contact@lille.fr", "N3"),
+                ("Nice", "contact@nice.fr", "N3"),
+                ("Nantes", "contact@nantes.fr", "N3"),
+            ]
+            for name, email, tier in clubs_data:
+                if not Club.query.filter_by(email=email).first():
+                    c = Club(
+                        name=name,
+                        tier=tier,
+                        email=email,
+                        password_hash=generate_password_hash('password123'),
+                        city='Paris',
+                        logo_path='res/logo/ryze.png'
+                    )
+                    db.session.add(c)
+            db.session.commit()
+
+            # Seed agents
+            agents_data = [
+                ("Jean", "Dupont", "agent1@france.fr", "Paris", "Elite Agency", "0600000001"),
+                ("Marie", "Durand", "agent2@france.fr", "Lyon", "Pro Agents", "0600000002"),
+                ("Pierre", "Lefevre", "agent3@france.fr", "Marseille", "Hexagone Sports", "0600000003"),
+                ("Luc", "Moreau", "agent4@france.fr", "Toulouse", "Elite Agency", "0600000004"),
+                ("Sophie", "Lambert", "agent5@france.fr", "Nice", "Pro Agents", "0600000005"),
+                ("Antoine", "Roux", "agent6@france.fr", "Nantes", "Hexagone Sports", "0600000006"),
+                ("Claire", "Fontaine", "agent7@france.fr", "Strasbourg", "Elite Agency", "0600000007"),
+                ("Julien", "Garnier", "agent8@france.fr", "Montpellier", "Pro Agents", "0600000008"),
+                ("Camille", "Faure", "agent9@france.fr", "Bordeaux", "Hexagone Sports", "0600000009"),
+                ("Hugo", "Blanc", "agent10@france.fr", "Lille", "Elite Agency", "0600000010"),
+                ("Emma", "Perrin", "agent11@france.fr", "Rennes", "Pro Agents", "0600000011"),
+                ("Louis", "Marchand", "agent12@france.fr", "Reims", "Hexagone Sports", "0600000012"),
+                ("Chloe", "Robin", "agent13@france.fr", "Le Havre", "Elite Agency", "0600000013"),
+                ("Lucas", "Guerin", "agent14@france.fr", "Saint-Etienne", "Pro Agents", "0600000014"),
+                ("Manon", "Benoit", "agent15@france.fr", "Grenoble", "Hexagone Sports", "0600000015"),
+            ]
+            for first_name, last_name, email, city, agency, phone in agents_data:
+                if not Agent.query.filter_by(email=email).first():
+                    a = Agent(
+                        first_name=first_name,
+                        last_name=last_name,
+                        email=email,
+                        password_hash=generate_password_hash('password123'),
+                        city=city,
+                        agency=agency,
+                        phone=phone
+                    )
+                    db.session.add(a)
+            db.session.commit()
+            # ...existing player seeding logic, club-player links, stats, performances...
         return 'Database seeded successfully! Remove this route after use.'
     except Exception as e:
         return f'Error seeding database: {e}', 500

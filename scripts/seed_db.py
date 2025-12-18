@@ -62,7 +62,7 @@ def ensure_defaults():
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
-                password_hash=generate_password_hash('AgentPass123!'),
+                password_hash=generate_password_hash('password123'),
                 city=city,
                 agency=agency,
                 phone=phone
