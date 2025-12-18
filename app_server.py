@@ -1,5 +1,3 @@
-
-
 """
 ryze Basketball Platform - Flask Backend
 Supports clubs and players with subscription tiers and private dashboards
@@ -554,6 +552,29 @@ def filter_players():
         'height': p.height,
         'photo': p.photo_path
     } for p in players[:20]])
+
+
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    """Admin dashboard page"""
+    if 'user_type' not in session or session['user_type'] != 'admin':
+        return redirect(url_for('login'))
+    
+    # Example: fetch all users by category for tabular display
+    clubs = Club.query.all()
+    players = Player.query.all()
+    agents = Agent.query.all()
+    return render_template('admin_dashboard.html', clubs=clubs, players=players, agents=agents, admin_name=session.get('user_name', 'Admin'))
+
+
+@app.route('/agent/dashboard')
+def agent_dashboard():
+    """Agent dashboard page"""
+    agent_id = session.get('user_id')
+    agent = Agent.query.get(agent_id) if agent_id else None
+    if not agent:
+        return redirect(url_for('login'))
+    return render_template('agent_dashboard.html', agent=agent)
 
 
 # ==================== Initialize Database ====================
