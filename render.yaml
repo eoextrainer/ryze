@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: dunes-app
+    name: ryze-app
     env: docker
     plan: free
     autoDeploy: true

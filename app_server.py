@@ -1,5 +1,5 @@
 """
-Dunes Basketball Platform - Flask Backend
+ryze Basketball Platform - Flask Backend
 Supports clubs and players with subscription tiers and private dashboards
 """
 
@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import random
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'dunes-basketball-secret-key-2025'
+app.config['SECRET_KEY'] = 'ryze-basketball-secret-key-2025'
 
 # Prefer DATABASE_URL if provided (Render MySQL), fallback to local SQLite
 db_url = os.environ.get('DATABASE_URL')
@@ -23,7 +23,7 @@ if db_url:
         db_url = db_url.replace('postgres://', 'postgresql+psycopg2://', 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dunes_basketball.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ryze_basketball.db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -500,7 +500,7 @@ def init_db():
             player = Player(
                 first_name=first_names[i],
                 last_name=last_names[i],
-                email=f"player{i+1}@dunes.fr",
+                email=f"player{i+1}@ryze.fr",
                 date_of_birth=datetime(1990 + i % 20, random.randint(1, 12), random.randint(1, 28)).date(),
                 height=180 + random.randint(-20, 20),
                 weight=80 + random.randint(-20, 30),
@@ -615,9 +615,9 @@ if __name__ == '__main__':
     host = os.environ.get('HOST', '0.0.0.0')
     debug = os.environ.get('FLASK_DEBUG', '0') in ('1', 'true', 'True')
 
-    print("\n✅ Dunes Basketball Platform Ready!")
+    print("\n✅ ryze Basketball Platform Ready!")
     print(f"📍 Server: http://{host}:{port}")
     print("🔐 Demo Credentials:")
     print("   Club: contact@parisbball.fr / password123")
-    print("   Player: player1@dunes.fr / password123\n")
+    print("   Player: player1@ryze.fr / password123\n")
     app.run(debug=debug, port=port, host=host)

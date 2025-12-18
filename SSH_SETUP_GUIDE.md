@@ -1,4 +1,4 @@
-# SSH & Git Remote Setup Guide - Dunes CMS v2
+# SSH & Git Remote Setup Guide - ryze CMS v2
 
 ## ✅ Completed: SSH Key Generation
 
@@ -50,7 +50,7 @@ cat ~/.ssh/id_ed25519.pub
 
 1. Go to: https://github.com/settings/keys
 2. Click "New SSH key"
-3. **Title**: Dunes CMS v2 Local Dev (or your preference)
+3. **Title**: ryze CMS v2 Local Dev (or your preference)
 4. **Key type**: Authentication Key
 5. **Key**: Paste the entire public key from above
 6. Click "Add SSH key"
@@ -77,8 +77,8 @@ Hi eoextrainer! You've successfully authenticated, but GitHub does not provide s
 Your repository has been configured with:
 
 ```
-origin   → git@github.com:eoextrainer/dunes.git  (Downstream/Main)
-upstream → git@github.com:eoextrainer/dunes.git  (Upstream/Integration)
+origin   → git@github.com:eoextrainer/ryze.git  (Downstream/Main)
+upstream → git@github.com:eoextrainer/ryze.git  (Upstream/Integration)
 ```
 
 ### Ready Branch Configuration
@@ -94,7 +94,7 @@ The `ready` branch is configured with:
 Once you've added the SSH key to GitHub, initialize the remote tracking:
 
 ```bash
-cd /media/eoex/DOJO/CONSULTING/PROJECTS/dunes/cms-v2
+cd /media/eoex/DOJO/CONSULTING/PROJECTS/ryze/cms-v2
 
 # Fetch all remote branches
 git fetch --all
@@ -118,7 +118,7 @@ git checkout ready
 git pull upstream int
 ```
 
-This pulls from `git@github.com:eoextrainer/dunes.git` on branch `int`
+This pulls from `git@github.com:eoextrainer/ryze.git` on branch `int`
 
 ### Push to Origin (main branch)
 
@@ -170,7 +170,7 @@ Remote Origin (Main):
 [git push origin ready:main]
 
 GitHub Remote Structure:
-git@github.com:eoextrainer/dunes.git
+git@github.com:eoextrainer/ryze.git
   ├─ main       (Downstream - receives from ready)
   └─ int        (Upstream - provides to ready)
 ```
@@ -218,7 +218,7 @@ Once SSH key is added to GitHub:
 ### Option 1: Push All Branches
 
 ```bash
-cd /media/eoex/DOJO/CONSULTING/PROJECTS/dunes/cms-v2
+cd /media/eoex/DOJO/CONSULTING/PROJECTS/ryze/cms-v2
 git push -u origin --all
 ```
 

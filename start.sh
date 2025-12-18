@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Dunes Basketball Platform - Universal Startup Script
+# ryze Basketball Platform - Universal Startup Script
 # Usage: ./start.sh
 
 # Activate Python virtual environment if present
@@ -13,4 +13,4 @@ fuser -k 5000/tcp 2>/dev/null || true
 sleep 1
 
 # Start Flask app
-python3 app.py
+python3 app_server.py

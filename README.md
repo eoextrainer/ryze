@@ -1,2 +1,2 @@
-# dunes
-Dunes Be Global CMS
+# ryze
+ryze Be Global CMS

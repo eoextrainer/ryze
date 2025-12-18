@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Dunes CI helper: commit, push, trigger Render deploy, and open browser
+# ryze CI helper: commit, push, trigger Render deploy, and open browser
 # Requirements:
 # - git configured with remote "origin" pointing to GitHub
 # - Render auto-deploy enabled for the connected service
 # - $BROWSER available in Codespaces (provided)
-# - Optional: set RENDER_URL env var or add to .env / dunes.config
+# - Optional: set RENDER_URL env var or add to .env / ryze.config
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"/.. && pwd)"
 cd "$ROOT_DIR"
@@ -17,15 +17,15 @@ if [[ -f .env ]]; then
     # shellcheck disable=SC2046
     export $(grep -E '^(RENDER_URL|SERVICE_NAME)=' .env | xargs -d '\n') || true
 fi
-if [[ -f dunes.config ]]; then
+if [[ -f ryze.config ]]; then
     # shellcheck disable=SC2046
-    export $(grep -E '^(RENDER_URL|SERVICE_NAME)=' dunes.config | xargs -d '\n') || true
+    export $(grep -E '^(RENDER_URL|SERVICE_NAME)=' ryze.config | xargs -d '\n') || true
 fi
 
 RENDER_URL="${RENDER_URL:-${RENDER_URL_DEFAULT}}"
-SERVICE_NAME="${SERVICE_NAME:-dunes}"
+SERVICE_NAME="${SERVICE_NAME:-ryze}"
 
-echo "== Dunes Runner =="
+echo "== ryze Runner =="
 echo "Repo: $(git remote get-url origin 2>/dev/null || echo 'no origin remote')"
 echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
 
@@ -48,7 +48,7 @@ else
 
     # Auto-generate a concise commit message
     LAST_DIFF_SUMMARY="$(git diff --stat)"
-    COMMIT_MSG="chore: dunes runner auto-commit
+    COMMIT_MSG="chore: ryze runner auto-commit
 
 Summary:
 ${LAST_DIFF_SUMMARY}"
@@ -75,7 +75,7 @@ if [[ -z "$RENDER_URL" ]]; then
         fi
     fi
     # Note: Actual Render URL is assigned per service; cannot be reliably inferred.
-    echo "Render URL not set. Please set RENDER_URL in .env or dunes.config (e.g., https://dunes.onrender.com)."
+    echo "Render URL not set. Please set RENDER_URL in .env or ryze.config (e.g., https://ryze.onrender.com)."
 fi
 
 # Open the service URL if available

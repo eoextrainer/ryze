@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Dunes Basketball Platform - Flask Server Launcher
-cd /media/eoex/DOJO/CONSULTING/PROJECTS/dunes/cms-v2 || exit 1
+# ryze Basketball Platform - Flask Server Launcher
+cd /media/eoex/DOJO/CONSULTING/PROJECTS/ryze/cms-v2 || exit 1
 
 # Check if .venv exists, activate it
 if [ -d ".venv" ]; then
@@ -14,12 +14,12 @@ fuser -k 5000/tcp 2>/dev/null || true
 sleep 1
 
 # Start Flask app
-echo "🚀 Starting Dunes Basketball Flask Server..."
+echo "🚀 Starting ryze Basketball Flask Server..."
 echo "📍 Server will be available at http://localhost:5000"
 echo ""
 echo "🔐 Demo Credentials:"
 echo "   Club: contact@parisbball.fr / password123"
-echo "   Player: player1@dunes.fr / password123"
+echo "   Player: player1@ryze.fr / password123"
 echo ""
 
 python app.py

@@ -1,0 +1,66 @@
+# Git Remote Configuration for ryze CMS v2
+# ===========================================
+
+# Remote: origin (Downstream - Main Release Branch)
+# URL: git@github.com:eoextrainer/ryze.git
+# Purpose: Destination for production releases
+# Push Target: ready → origin:main
+#
+# Remote: upstream (Upstream - Integration Branch)
+# URL: git@github.com:eoextrainer/ryze.git
+# Purpose: Source for integration updates
+# Pull Source: upstream:int → ready
+#
+# ==========================================
+# READY BRANCH CONFIGURATION
+# ==========================================
+# 
+# Local Branch: ready
+# Push Remote: origin (pushes to origin/main)
+# Merge Remote: upstream (pulls from upstream/int)
+#
+# Workflow:
+#   1. Pull latest from upstream int:
+#      git checkout ready
+#      git pull upstream int
+#
+#   2. Make changes locally
+#
+#   3. Push to origin main:
+#      git checkout ready
+#      git push origin ready:main
+#
+# Combined:
+#   git fetch upstream int && git push origin ready:main
+#
+# ==========================================
+# REMOTE SETUP COMMANDS
+# ==========================================
+#
+# Remotes already configured:
+#   git remote add origin git@github.com:eoextrainer/ryze.git
+#   git remote add upstream git@github.com:eoextrainer/ryze.git
+#
+# After SSH key is added to GitHub and fetch succeeds:
+#
+#   git fetch --all
+#   git checkout ready
+#   git branch -u upstream/int ready
+#   git config branch.ready.pushRemote origin
+#
+# ==========================================
+# SSH CONFIGURATION
+# ==========================================
+#
+# SSH Key: ~/.ssh/id_ed25519
+# SSH Config: ~/.ssh/config
+# GitHub Account: eoextrainer
+# Email: educ1.eoex@gmail.com
+#
+# Test SSH:
+#   ssh -T git@github.com
+#
+# Expected output:
+#   Hi eoextrainer! You've successfully authenticated...
+#
+# ==========================================

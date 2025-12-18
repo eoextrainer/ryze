@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dunes Basketball Platform - Comprehensive Database & Login Verification
+ryze Basketball Platform - Comprehensive Database & Login Verification
 Tests database seeding and verifies login functionality for all users
 """
 
@@ -231,7 +231,7 @@ def main():
     """Run all verification tests"""
     print("\n\n")
     print("🏀 " + "="*76 + " 🏀")
-    print("   DUNES BASKETBALL PLATFORM - DATABASE & LOGIN VERIFICATION")
+    print("   ryze BASKETBALL PLATFORM - DATABASE & LOGIN VERIFICATION")
     print("🏀 " + "="*76 + " 🏀")
     
     # Test 1: Database seeding

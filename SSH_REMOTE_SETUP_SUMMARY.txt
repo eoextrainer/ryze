@@ -1,9 +1,9 @@
 ================================================================================
-SSH & GIT REMOTE SETUP - DUNES CMS V2
+SSH & GIT REMOTE SETUP - ryze CMS V2
 ================================================================================
 
-Project: Dunes Be Global - CMS v2
-Location: /media/eoex/DOJO/CONSULTING/PROJECTS/dunes/cms-v2
+Project: ryze Be Global - CMS v2
+Location: /media/eoex/DOJO/CONSULTING/PROJECTS/ryze/cms-v2
 Date: December 9, 2024
 Status: ✅ CONFIGURED & READY FOR GITHUB SSH
 
@@ -35,21 +35,21 @@ SSH Key Pair Status:
 ================================================================================
 
 Remote: origin
-  URL: git@github.com:eoextrainer/dunes.git
+  URL: git@github.com:eoextrainer/ryze.git
   Type: Downstream (Main Release)
   Purpose: Destination for production releases
   Branches: main
   Push Target: ready → origin/main
   
 Remote: upstream
-  URL: git@github.com:eoextrainer/dunes.git
+  URL: git@github.com:eoextrainer/ryze.git
   Type: Upstream (Integration)
   Purpose: Source for integration updates
   Branches: int
   Pull Source: upstream/int → ready
 
-Both remotes point to: git@github.com:eoextrainer/dunes.git
-Repository Name: dunes
+Both remotes point to: git@github.com:eoextrainer/ryze.git
+Repository Name: ryze
 GitHub Account: eoextrainer
 
 ================================================================================
@@ -94,11 +94,11 @@ Combined Operation:
 Current Git Configuration:
 
 [remote "origin"]
-    url = git@github.com:eoextrainer/dunes.git
+    url = git@github.com:eoextrainer/ryze.git
     fetch = +refs/heads/*:refs/remotes/origin/*
 
 [remote "upstream"]
-    url = git@github.com:eoextrainer/dunes.git
+    url = git@github.com:eoextrainer/ryze.git
     fetch = +refs/heads/*:refs/remotes/upstream/*
 
 [branch "ready"]
@@ -107,10 +107,10 @@ Current Git Configuration:
     mergeremote = upstream
 
 Git Remote List:
-  origin   git@github.com:eoextrainer/dunes.git (fetch)
-  origin   git@github.com:eoextrainer/dunes.git (push)
-  upstream git@github.com:eoextrainer/dunes.git (fetch)
-  upstream git@github.com:eoextrainer/dunes.git (push)
+  origin   git@github.com:eoextrainer/ryze.git (fetch)
+  origin   git@github.com:eoextrainer/ryze.git (push)
+  upstream git@github.com:eoextrainer/ryze.git (fetch)
+  upstream git@github.com:eoextrainer/ryze.git (push)
 
 ================================================================================
 5. NEXT STEPS: GITHUB SSH KEY SETUP
@@ -127,7 +127,7 @@ Steps to Add to GitHub:
 2. Click: "New SSH key" button
 
 3. Fill in the form:
-   - Title: "Dunes CMS v2 Local Dev"
+   - Title: "ryze CMS v2 Local Dev"
    - Key type: "Authentication Key"
    - Key (paste entire public key above)
 
@@ -145,7 +145,7 @@ After Adding SSH Key:
     provide shell access."
 
 2. Fetch remote branches:
-   cd /media/eoex/DOJO/CONSULTING/PROJECTS/dunes/cms-v2
+   cd /media/eoex/DOJO/CONSULTING/PROJECTS/ryze/cms-v2
    git fetch --all
    
 3. Configure ready branch tracking:
@@ -208,7 +208,7 @@ Complete Workflow:
 
 GitHub Remote Structure:
 
-  git@github.com:eoextrainer/dunes.git
+  git@github.com:eoextrainer/ryze.git
   ├─ main (Downstream - receives from ready)
   │  └─ Purpose: Production release branch
   ├─ int  (Upstream - provides to ready)
@@ -374,7 +374,7 @@ What's Pending:
   ⏳ Add SSH public key to GitHub
   ⏳ Test SSH connection
   ⏳ Fetch remote branches
-  ⏳ Begin syncing with git@github.com:eoextrainer/dunes.git
+  ⏳ Begin syncing with git@github.com:eoextrainer/ryze.git
 
 How to Proceed:
   1. Go to: https://github.com/settings/keys
@@ -393,11 +393,11 @@ Success Indicators:
 PROJECT INFORMATION
 ================================================================================
 
-Project Name: Dunes Be Global - CMS v2
-GitHub Repository: git@github.com:eoextrainer/dunes.git
+Project Name: ryze Be Global - CMS v2
+GitHub Repository: git@github.com:eoextrainer/ryze.git
 GitHub Account: eoextrainer
 Associated Email: educ1.eoex@gmail.com
-Project Location: /media/eoex/DOJO/CONSULTING/PROJECTS/dunes/cms-v2
+Project Location: /media/eoex/DOJO/CONSULTING/PROJECTS/ryze/cms-v2
 
 Local Branches: 9 (main, develop, feature, test, ready, archive, int, qa, prod)
 Remote Remotes: 2 (origin, upstream)

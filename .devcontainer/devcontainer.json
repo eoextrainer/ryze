@@ -1,0 +1,34 @@
+{
+  "name": "ryze Basketball (Codespaces)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+  // Disable docker-in-docker to avoid rebuild failures on Codespaces
+  "features": {},
+  "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install --upgrade pip setuptools wheel && pip install -r requirements.txt",
+  "postStartCommand": "bash -lc '\n+    # Activate venv if present\n+    if [ -d .venv ]; then . .venv/bin/activate; fi;\n+    python --version || true;\n+    echo "Devcontainer started. Port 8000 is configured Public via portsAttributes.";\n+    # Start Gunicorn if not already running\n+    if pgrep -f "gunicorn .*app_server:app" >/dev/null; then\n+      echo "Gunicorn already running.";\n+    else\n+      echo "Starting Gunicorn on 0.0.0.0:8000...";\n+      cd /workspaces/ryze && . .venv/bin/activate && nohup gunicorn app_server:app -b 0.0.0.0:8000 --workers 1 >/tmp/gunicorn.out 2>&1 &\n+    fi\n+  '",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "containerEnv": {
+    "FLASK_SECRET_KEY": "change-me",
+    "FLASK_DEBUG": "0"
+  },
+  "forwardPorts": [8000, 8001],
+  "portsAttributes": {
+    "8000": {
+      "label": "ryze Basketball",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    },
+    "8001": {
+      "label": "ryze Basketball (Mobile)",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    }
+  }
+}

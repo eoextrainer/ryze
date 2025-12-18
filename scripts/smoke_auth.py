@@ -5,7 +5,7 @@ import json
 import urllib.request
 
 def main():
-    base_url = os.environ.get('RENDER_URL', 'https://dunes.onrender.com')
+    base_url = os.environ.get('RENDER_URL', 'https://ryze.onrender.com')
     url = base_url.rstrip('/') + '/auth/smoke'
     try:
         with urllib.request.urlopen(url, timeout=20) as resp:

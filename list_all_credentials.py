@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dunes Basketball Platform - Complete User Credentials Report
+ryze Basketball Platform - Complete User Credentials Report
 Lists all player and club login credentials for verification
 """
 
@@ -10,7 +10,7 @@ def generate_credentials_report():
     """Generate a comprehensive credentials report"""
     with app.app_context():
         print("\n" + "="*80)
-        print("DUNES BASKETBALL PLATFORM - USER CREDENTIALS REPORT")
+        print("ryze BASKETBALL PLATFORM - USER CREDENTIALS REPORT")
         print("="*80)
         
         # All Players
@@ -67,11 +67,11 @@ def generate_credentials_report():
         print("QUICK TEST CREDENTIALS")
         print("="*80)
         print("\nPlayer Examples (All passwords: password123):")
-        print("  - player1@dunes.fr   (Luc James, tier1 💎, Forward)")
-        print("  - player2@dunes.fr   (Marc Johnson, tier2 ⭐, Guard)")
-        print("  - player4@dunes.fr   (Pierre Brown, tier3 🎯, Center)")
-        print("  - player15@dunes.fr  (Michel Lewis, tier1 💎)")
-        print("  - player30@dunes.fr  (Stephen Fournier, tier3 🎯)")
+        print("  - player1@ryze.fr   (Luc James, tier1 💎, Forward)")
+        print("  - player2@ryze.fr   (Marc Johnson, tier2 ⭐, Guard)")
+        print("  - player4@ryze.fr   (Pierre Brown, tier3 🎯, Center)")
+        print("  - player15@ryze.fr  (Michel Lewis, tier1 💎)")
+        print("  - player30@ryze.fr  (Stephen Fournier, tier3 🎯)")
         
         print("\nClub Examples (All passwords: password123):")
         print("  - contact@parisbball.fr   (Paris Basketball, Pro A 🏆)")
